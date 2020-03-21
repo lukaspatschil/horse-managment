@@ -29,4 +29,12 @@ public class SimpleOwnerService implements OwnerService {
         return ownerDao.findOneById(id);
     }
 
+    @Override
+    public Owner save(Owner owner) {
+        LOGGER.trace("saveOwnerwithId({})", owner.getId());
+
+        // do some validation
+
+        return ownerDao.save(owner);
+    }
 }

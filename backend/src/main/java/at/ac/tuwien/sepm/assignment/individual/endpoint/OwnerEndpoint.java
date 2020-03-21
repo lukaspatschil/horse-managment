@@ -2,9 +2,12 @@ package at.ac.tuwien.sepm.assignment.individual.endpoint;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.OwnerMapper;
+import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.service.OwnerService;
 import java.lang.invoke.MethodHandles;
+
+import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,20 @@ public class OwnerEndpoint {
             return ownerMapper.entityToDto(ownerService.findOneById(id));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public OwnerDto post(@RequestBody OwnerDto owner) {
+        LOGGER.info("POST " + BASE_URL + "/{}", owner.getName());
+        try {
+            Owner ownerEntity = ownerMapper.dtoToEntity(owner);
+            return ownerMapper.entityToDto(ownerService.save(ownerEntity));
+        } catch (ValidationException e) {
+            throw new
+                ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
+                    "Error during saving owner", e);
         }
     }
 }
