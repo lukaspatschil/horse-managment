@@ -13,6 +13,13 @@ public interface OwnerDao {
      * @throws NotFoundException   will be thrown if the owner could not be found in the database.
      */
     Owner findOneById(Long id);
+
+    /**
+     *
+     * @param owner the owner to save in the db
+     * @return the owner which was saved
+     * @throws //add here
+     */
     Owner save(Owner owner);
 
 }

@@ -1,7 +1,5 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 
-import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 

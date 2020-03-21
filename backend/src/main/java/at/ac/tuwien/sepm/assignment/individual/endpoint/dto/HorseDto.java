@@ -67,9 +67,9 @@ public class HorseDto extends BaseDto {
         if (!super.equals(o)) return false;
         HorseDto horseDto = (HorseDto) o;
         return rating == horseDto.rating &&
-            Objects.equals(name, horseDto.name) &&
-            notes.equals(horseDto.notes) &&
-            Objects.equals(birthday, horseDto.birthday);
+            name.equals(horseDto.name) &&
+            Objects.equals(notes, horseDto.notes) &&
+            birthday.equals(horseDto.birthday);
     }
 
     @Override
