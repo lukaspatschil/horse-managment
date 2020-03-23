@@ -21,6 +21,9 @@ export class OwnerComponent implements OnInit {
   ngOnInit():void {
     this.ownerService.getOwner().subscribe(owners => {
       this.owners = owners;
+    },
+    error => {
+      this.defaultServiceErrorHandling(error);
     });
   }
 

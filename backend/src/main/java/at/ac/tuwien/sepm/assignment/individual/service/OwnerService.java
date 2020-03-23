@@ -6,8 +6,6 @@ import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import java.util.List;
 
 public interface OwnerService {
-
-
     /**
      * @param id of the owner to find.
      * @return the owner with the specified id.

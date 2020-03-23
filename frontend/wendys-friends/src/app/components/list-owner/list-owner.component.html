@@ -4,6 +4,8 @@
         <p>Owner: <span class="font-weight-bold">{{owner.name}}</span> with the ID: 
             <span class="font-weight-bold">{{owner.id}}</span></p>
         </label>
-        <button (click)="onDelete(owner)" class="del">X</button>
+        <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </p>
 </div>

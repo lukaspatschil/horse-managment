@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.Race;
 
 public class HorseDto extends BaseDto {
 
@@ -10,23 +11,26 @@ public class HorseDto extends BaseDto {
     private String notes;
     private int rating;
     private Date birthday;
+    private Race race;
 
     public HorseDto() {
     }
 
-    public HorseDto(Long id, String name, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, int rating, Date birthday, Race race, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
+        this.race = race;
     }
 
-    public HorseDto(Long id, String name, String notes, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, String notes, int rating, Date birthday, Race race, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
         this.rating = rating;
         this.birthday = birthday;
+        this.race = race;
     }
 
     public Date getBirthday() {

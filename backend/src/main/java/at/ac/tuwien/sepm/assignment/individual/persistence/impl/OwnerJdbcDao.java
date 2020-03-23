@@ -4,7 +4,6 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.OwnerDao;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.List;
 import org.slf4j.Logger;

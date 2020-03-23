@@ -20,6 +20,9 @@ export class HorseComponent implements OnInit {
   ngOnInit(): void {
     this.horseService.getHorse().subscribe(horses => {
       this.horses = horses;
+    },
+    error => {
+      this.defaultServiceErrorHandling(error);
     });
   }
 
@@ -68,7 +71,7 @@ export class HorseComponent implements OnInit {
     this.error = true;
     if (error.status === 0) {
       // If status is 0, the backend is probably down
-      this.errorMessage = 'The backend seems not to be reachable';
+      this.errorMessage = 'The backend can not to be reachable';
     } else if (error.status === 400) {
       // If status is 400, the input was wrong
       this.errorMessage = 'The input was wrong';

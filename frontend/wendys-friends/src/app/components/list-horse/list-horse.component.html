@@ -4,6 +4,8 @@
         <p>Horse: <span class="font-weight-bold">{{horse.name}}</span> with the ID: 
             <span class="font-weight-bold">{{horse.id}}</span></p>
         </label>
-        <button (click)="onDelete(horse)" class="del">X</button>
+        <button (click)="onDelete(horse)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </p>
 </div>
