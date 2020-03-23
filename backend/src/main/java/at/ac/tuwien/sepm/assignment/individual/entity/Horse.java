@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class Horse extends BaseEntity {
@@ -8,19 +9,19 @@ public class Horse extends BaseEntity {
     private String name;
     private String notes;
     private int rating;
-    private LocalDateTime birthday;
+    private Date birthday;
 
     public Horse() {
     }
 
-    public Horse(Long id, String name, int rating, LocalDateTime birthday, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
     }
 
-    public Horse(Long id, String name, String notes, int rating, LocalDateTime birthday, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, String notes, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -28,11 +29,11 @@ public class Horse extends BaseEntity {
         this.birthday = birthday;
     }
 
-    public LocalDateTime getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

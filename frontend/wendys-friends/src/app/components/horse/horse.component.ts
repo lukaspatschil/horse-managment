@@ -43,6 +43,7 @@ export class HorseComponent implements OnInit {
    */
   public addHorse(horse:Horse) {
     this.horseService.addHorse(horse).subscribe(horse => {
+      this.horses.push(horse);
       this.success = true;
       this.horse = horse;
     },

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class HorseDto extends BaseDto {
@@ -8,19 +9,19 @@ public class HorseDto extends BaseDto {
     private String name;
     private String notes;
     private int rating;
-    private LocalDateTime birthday;
+    private Date birthday;
 
     public HorseDto() {
     }
 
-    public HorseDto(Long id, String name, int rating, LocalDateTime birthday, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
     }
 
-    public HorseDto(Long id, String name, String notes, int rating, LocalDateTime birthday, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, String notes, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -28,11 +29,11 @@ public class HorseDto extends BaseDto {
         this.birthday = birthday;
     }
 
-    public LocalDateTime getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

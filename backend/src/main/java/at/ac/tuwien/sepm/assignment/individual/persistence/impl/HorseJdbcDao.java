@@ -60,7 +60,7 @@ public class HorseJdbcDao implements HorseDao {
         horse.setName(resultSet.getString("name"));
         horse.setNotes(resultSet.getString("notes"));
         horse.setRating(resultSet.getInt("rating"));
-        horse.setBirthday(resultSet.getTimestamp("birthday").toLocalDateTime());
+        horse.setBirthday(resultSet.getTimestamp("birthday"));
         horse.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
         horse.setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
         return horse;
