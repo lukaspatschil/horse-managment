@@ -1,39 +1,47 @@
 package at.ac.tuwien.sepm.assignment.individual.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
 public class Horse extends BaseEntity {
 
     private String name;
     private String notes;
     private int rating;
-    private Date birthday;
+    private LocalDate birthday;
+    private Long owner;
+    private HorseRace race;
 
     public Horse() {
     }
 
-    public Horse(Long id, String name, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
+        this.owner = owner;
+        this.race = race;
     }
 
-    public Horse(Long id, String name, String notes, int rating, Date birthday, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
         this.rating = rating;
         this.birthday = birthday;
+        this.owner = owner;
+        this.race = race;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -61,6 +69,22 @@ public class Horse extends BaseEntity {
         this.rating = rating;
     }
 
+    public Long getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Long owner) {
+        this.owner = owner;
+    }
+
+    public HorseRace getRace() {
+        return race;
+    }
+
+    public void setRace(HorseRace race) {
+        this.race = race;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,14 +92,16 @@ public class Horse extends BaseEntity {
         if (!super.equals(o)) return false;
         Horse horse = (Horse) o;
         return rating == horse.rating &&
-            Objects.equals(name, horse.name) &&
-            notes.equals(horse.notes) &&
-            Objects.equals(birthday, horse.birthday);
+            owner == horse.owner &&
+            name.equals(horse.name) &&
+            Objects.equals(notes, horse.notes) &&
+            birthday.equals(horse.birthday) &&
+            race == horse.race;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, notes, rating, birthday);
+        return Objects.hash(super.hashCode(), name, notes, rating, birthday, owner, race);
     }
 
     @Override

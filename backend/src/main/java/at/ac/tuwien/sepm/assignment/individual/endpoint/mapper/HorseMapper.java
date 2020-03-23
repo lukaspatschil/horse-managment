@@ -11,7 +11,7 @@ import java.util.List;
 public class HorseMapper {
 
     public HorseDto entityToDto(Horse horse) {
-        return new HorseDto(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getCreatedAt(), horse.getUpdatedAt());
+        return new HorseDto(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), horse.getCreatedAt(), horse.getUpdatedAt());
     }
 
     public List<HorseDto> entitysToDto(List<Horse> horses) {
@@ -23,6 +23,6 @@ public class HorseMapper {
     }
 
     public Horse dtoToEntity(HorseDto horse) {
-        return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getCreatedAt(), horse.getUpdatedAt());
+        return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), horse.getCreatedAt(),  horse.getUpdatedAt());
     }
 }

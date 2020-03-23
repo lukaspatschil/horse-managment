@@ -1,6 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 
-enum Race {
+public enum HorseRace {
     ARABIAN,
     MORGAN,
     PAINT,

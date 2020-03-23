@@ -1,43 +1,47 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
-import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.Race;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
 public class HorseDto extends BaseDto {
 
     private String name;
     private String notes;
     private int rating;
-    private Date birthday;
-    private Race race;
+    private LocalDate birthday;
+    private HorseRace race;
+    private Long owner;
 
     public HorseDto() {
     }
 
-    public HorseDto(Long id, String name, int rating, Date birthday, Race race, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
         this.race = race;
+        this.owner = owner;
     }
 
-    public HorseDto(Long id, String name, String notes, int rating, Date birthday, Race race, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
         this.rating = rating;
         this.birthday = birthday;
         this.race = race;
+        this.owner = owner;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -65,6 +69,22 @@ public class HorseDto extends BaseDto {
         this.rating = rating;
     }
 
+    public HorseRace getRace() {
+        return race;
+    }
+
+    public void setRace(HorseRace race) {
+        this.race = race;
+    }
+
+    public Long getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Long owner) {
+        this.owner = owner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,12 +94,14 @@ public class HorseDto extends BaseDto {
         return rating == horseDto.rating &&
             name.equals(horseDto.name) &&
             Objects.equals(notes, horseDto.notes) &&
-            birthday.equals(horseDto.birthday);
+            birthday.equals(horseDto.birthday) &&
+            race == horseDto.race &&
+            owner.equals(horseDto.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, notes, rating, birthday);
+        return Objects.hash(super.hashCode(), name, notes, rating, birthday, race, owner);
     }
 
     @Override
