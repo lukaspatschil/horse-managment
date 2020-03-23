@@ -1,10 +1,13 @@
 package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import at.ac.tuwien.sepm.assignment.individual.util.Validator;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,12 @@ public class SimpleHorseService implements HorseService{
     public Horse findOneById(Long id) {
         LOGGER.trace("findOneById({})", id);
         return horseDao.findOneById(id);
+    }
+
+    @Override
+    public List<Horse> getAllHorse() {
+        LOGGER.trace("getAllHorse");
+        return horseDao.getAllHorse();
     }
 
     @Override

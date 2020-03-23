@@ -43,7 +43,7 @@ public class OwnerEndpoint {
 
     @GetMapping
     public List<OwnerDto> getAllOwner() {
-        LOGGER.info("GET ALL OWNER");
+        LOGGER.info("GET all owner");
         try {
             return ownerMapper.entitysToDto(ownerService.getAllOwner());
         } catch (NotFoundException e) {

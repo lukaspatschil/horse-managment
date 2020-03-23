@@ -1,10 +1,12 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.HorseMapper;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
@@ -35,6 +37,16 @@ public class HorseEndpoint {
         LOGGER.info("GET " + BASE_URL + "/{}", id);
         try {
             return horseMapper.entityToDto(horseService.findOneById(id));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
+
+    @GetMapping
+    public List<HorseDto> getAllHorse() {
+        LOGGER.info("GET all horses");
+        try {
+            return horseMapper.entitysToDto(horseService.getAllHorse());
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         }

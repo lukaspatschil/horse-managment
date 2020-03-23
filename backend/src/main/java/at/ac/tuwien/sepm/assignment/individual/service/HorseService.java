@@ -1,7 +1,10 @@
 package at.ac.tuwien.sepm.assignment.individual.service;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+
+import java.util.List;
 
 public interface HorseService {
     /**
@@ -11,6 +14,12 @@ public interface HorseService {
      * @throws NotFoundException will be thrown if the owner could not be found in the system.
      */
     Horse findOneById(Long id);
+
+    /**
+     *
+     * @return
+     */
+    List<Horse> getAllHorse();
 
     /**
      * @param horse horse to save.

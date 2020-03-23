@@ -12,11 +12,15 @@ export class HorseComponent implements OnInit {
   error = false;
   success = false;
   errorMessage = '';
+  horses:Horse[];
   horse: Horse;
 
   constructor(private horseService: HorseService) { }
 
   ngOnInit(): void {
+    this.horseService.getHorse().subscribe(horses => {
+      this.horses = horses;
+    });
   }
 
   /**
@@ -45,6 +49,17 @@ export class HorseComponent implements OnInit {
     error => {
       this.defaultServiceErrorHandling(error);
     });
+  }
+
+  /**
+   * 
+   * @param error 
+   */
+  public deleteHorse(horse: Horse) {
+    // Remove From UI
+    this.horses = this.horses.filter(o => o.id !== horse.id);
+    // Remove from server
+    this.horseService.deleteHorse(horse).subscribe();
   }
 
   private defaultServiceErrorHandling(error: any) {

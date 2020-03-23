@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import java.lang.invoke.MethodHandles;
@@ -42,6 +43,15 @@ public class HorseJdbcDao implements HorseDao {
         if (horses.isEmpty()) throw new NotFoundException("Could not find owner with id " + id);
 
         return horses.get(0);
+    }
+
+    @Override
+    public List<Horse> getAllHorse() {
+        LOGGER.trace("Get all the horses from the database");
+        final String sql = "SELECT * FROM " + TABLE_NAME;
+        List<Horse> horses = jdbcTemplate.query(sql, this::mapRow);
+
+        return horses;
     }
 
     private Horse mapRow(ResultSet resultSet, int i) throws SQLException {

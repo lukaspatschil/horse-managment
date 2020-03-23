@@ -17,7 +17,7 @@ public class OwnerMapper {
     public List<OwnerDto> entitysToDto(List<Owner> owners) {
         List<OwnerDto> ownersDto = new ArrayList<>();
         for (Owner owner: owners) {
-            ownersDto.add(new OwnerDto(owner.getId(), owner.getName(), owner.getCreatedAt(), owner.getUpdatedAt()));
+            ownersDto.add(entityToDto(owner));
         }
         return ownersDto;
     }

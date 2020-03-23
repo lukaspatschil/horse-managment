@@ -5,6 +5,8 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import org.springframework.dao.DataAccessException;
 
+import java.util.List;
+
 public interface HorseDao {
 
     /**
@@ -14,6 +16,12 @@ public interface HorseDao {
      * @throws NotFoundException   will be thrown if the owner could not be found in the database.
      */
     Horse findOneById(Long id);
+
+    /**
+     * TODO: add doc
+     * @return
+     */
+    List<Horse> getAllHorse();
 
     /**
      *

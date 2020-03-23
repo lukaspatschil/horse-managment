@@ -19,7 +19,26 @@ export class HorseService {
 
   constructor(private httpClient: HttpClient, private globals: Globals) { }
 
+  /**
+   * Loads all the current horses form the backend
+   */
+  getHorse():Observable<Horse[]> {
+    return this.httpClient.get<Horse[]>(this.messageBaseUri);
+  }
+
+  /**
+   * 
+   * @param horse 
+   */
   addHorse(horse: Horse): Observable<Horse> {
     return this.httpClient.post<Horse>(this.messageBaseUri, horse, httpOptions);
+  }
+
+    /**
+   * 
+   * @param horse 
+   */
+  deleteHorse(horse:Horse):Observable<Horse> {
+    return this.httpClient.delete<Horse>(this.messageBaseUri + '/' + horse.id);
   }
 }
