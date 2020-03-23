@@ -9,7 +9,6 @@
     <app-add-horse (addHorse)="addHorse($event)"></app-add-horse>
     <div *ngIf="success" class="alert alert-success" role="alert">
         <h4 class="alert-heading">Added a new horse to the database!</h4>
-        <p>Your command was successful</p>
         <hr>
         <p>This horse was added to the system:
             <span class="font-weight-bold">{{horse.name}}</span> with the id

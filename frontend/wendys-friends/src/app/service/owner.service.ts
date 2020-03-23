@@ -29,6 +29,13 @@ export class OwnerService {
     return this.httpClient.get<Owner>(this.messageBaseUri + '/' + id);
   }
 
+  /**
+   * Loads all the current user form the backend
+   */
+  getOwner():Observable<Owner[]> {
+    return this.httpClient.get<Owner[]>(this.messageBaseUri);
+  }
+
   addOwner(owner: Owner): Observable<Owner> {
     return this.httpClient.post<Owner>(this.messageBaseUri, owner, httpOptions);
   }

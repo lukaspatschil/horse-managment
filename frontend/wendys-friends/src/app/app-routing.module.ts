@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {OwnerComponent} from './components/owner/owner.component';
+import { OwnerComponent } from './components/owner/owner.component';
 import { HorseComponent } from './components/horse/horse.component';
 
 

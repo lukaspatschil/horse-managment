@@ -1,0 +1,9 @@
+<div class="owner">
+    <p>
+        <label for="{{ owner.id }}">
+        <p>Owner: <span class="font-weight-bold">{{owner.name}}</span> with the ID: 
+            <span class="font-weight-bold">{{owner.id}}</span></p>
+        </label>
+        <button (click)="onDelete(owner)" class="del">X</button>
+    </p>
+</div>

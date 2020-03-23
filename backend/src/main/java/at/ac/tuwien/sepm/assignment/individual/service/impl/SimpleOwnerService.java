@@ -5,6 +5,8 @@ import at.ac.tuwien.sepm.assignment.individual.persistence.OwnerDao;
 import at.ac.tuwien.sepm.assignment.individual.service.OwnerService;
 import at.ac.tuwien.sepm.assignment.individual.util.Validator;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class SimpleOwnerService implements OwnerService {
     public Owner findOneById(Long id) {
         LOGGER.trace("findOneById({})", id);
         return ownerDao.findOneById(id);
+    }
+
+    @Override
+    public List<Owner> getAllOwner() {
+        LOGGER.trace("getAllOwner");
+        return ownerDao.getAllOwner();
     }
 
     @Override

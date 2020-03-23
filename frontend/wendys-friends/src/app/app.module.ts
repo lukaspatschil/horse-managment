@@ -10,6 +10,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { HorseComponent } from './components/horse/horse.component';
 import { AddOwnerComponent } from './components/add-owner/add-owner.component';
 import { AddHorseComponent } from './components/add-horse/add-horse.component';
+import { ListHorseComponent } from './components/list-horse/list-horse.component';
+import { ListOwnerComponent } from './components/list-owner/list-owner.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { AddHorseComponent } from './components/add-horse/add-horse.component';
     OwnerComponent,
     HorseComponent,
     AddOwnerComponent,
-    AddHorseComponent
+    AddHorseComponent,
+    ListHorseComponent,
+    ListOwnerComponent
   ],
   imports: [
     BrowserModule,

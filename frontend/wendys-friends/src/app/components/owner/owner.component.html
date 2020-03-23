@@ -5,15 +5,16 @@
   </button>
 </div>
 
-<div class="container mt-3" *ngIf="owner">
+<div class="container mt-3">
     <app-add-owner (addOwner)="addOwner($event)"></app-add-owner>
     <div *ngIf="success" class="alert alert-success" role="alert">
         <h4 class="alert-heading">Added a new owner to the database!</h4>
-        <p>Your command was successful</p>
         <hr>
         <p>This owner was added to the system:
             <span class="font-weight-bold">{{owner.name}}</span> with the id
             <span class="font-weight-bold">{{owner.id}}</span>
         </p>
     </div>
+    <app-list-owner *ngFor="let owner of owners" [owner]="owner" (deleteOwner)="deleteOwner($event)">
+    </app-list-owner>
 </div>

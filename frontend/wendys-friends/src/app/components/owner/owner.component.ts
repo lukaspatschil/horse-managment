@@ -12,13 +12,16 @@ export class OwnerComponent implements OnInit {
   success = false;
   error = false;
   errorMessage = '';
-  owner: Owner;
+  owner:Owner;
+  owners:Owner[];
 
   constructor(private ownerService: OwnerService) {
   }
 
   ngOnInit() {
-    this.loadOwner(1);
+    this.ownerService.getOwner().subscribe(owners => {
+      this.owners = owners;
+    });
   }
 
   /**
@@ -39,7 +42,7 @@ export class OwnerComponent implements OnInit {
    * Loads the owner for the specified id
    * @param id the id of the owner
    */
-  private loadOwner(id: number) {
+   private loadOwner(id: number) {
     this.ownerService.getOwnerById(id).subscribe(
       (owner: Owner) => {
         this.owner = owner;
@@ -56,6 +59,7 @@ export class OwnerComponent implements OnInit {
    */
   public addOwner(owner: Owner) {
     this.ownerService.addOwner(owner).subscribe(owner => {
+      this.owners.push(owner);
       this.success = true;
       this.owner = owner;
     },
@@ -73,6 +77,9 @@ export class OwnerComponent implements OnInit {
     } else if (error.status === 400) {
       // If status is 400, the input was wrong
       this.errorMessage = 'The input was wrong!';
+    } else if (error.status === 500) {
+      // If status is 500, there was a server error
+      this.errorMessage = 'There was an unexpected server error';
     } else if (error.error.message === 'No message available') {
       // If no detailed error message is provided, fall back to the simple error name
       this.errorMessage = error.error.error;

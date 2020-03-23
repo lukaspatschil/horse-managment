@@ -6,6 +6,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.service.OwnerService;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.slf4j.Logger;
@@ -35,6 +36,16 @@ public class OwnerEndpoint {
         LOGGER.info("GET " + BASE_URL + "/{}", id);
         try {
             return ownerMapper.entityToDto(ownerService.findOneById(id));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
+
+    @GetMapping
+    public List<OwnerDto> getAllOwner() {
+        LOGGER.info("GET ALL OWNER");
+        try {
+            return ownerMapper.entitysToDto(ownerService.getAllOwner());
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         }

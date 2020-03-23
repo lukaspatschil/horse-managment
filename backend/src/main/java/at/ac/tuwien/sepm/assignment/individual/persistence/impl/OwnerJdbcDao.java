@@ -44,6 +44,15 @@ public class OwnerJdbcDao implements OwnerDao {
         return owners.get(0);
     }
 
+    @Override
+    public List<Owner> getAllOwner() {
+        LOGGER.trace("Get all the owner from the database");
+        final String sql = "SELECT * FROM " + TABLE_NAME;
+        List<Owner> owners = jdbcTemplate.query(sql, this::mapRow);
+
+        return owners;
+    }
+
 
     private Owner mapRow(ResultSet resultSet, int i) throws SQLException {
         final Owner owner = new Owner();

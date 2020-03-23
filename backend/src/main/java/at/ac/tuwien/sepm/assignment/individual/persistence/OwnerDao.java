@@ -4,6 +4,8 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import org.springframework.dao.DataAccessException;
 
+import java.util.List;
+
 public interface OwnerDao {
 
     /**
@@ -13,6 +15,8 @@ public interface OwnerDao {
      * @throws NotFoundException   will be thrown if the owner could not be found in the database.
      */
     Owner findOneById(Long id);
+
+    List<Owner> getAllOwner();
 
     /**
      *

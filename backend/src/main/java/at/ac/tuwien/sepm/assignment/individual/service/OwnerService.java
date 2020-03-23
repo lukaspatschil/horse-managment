@@ -3,6 +3,8 @@ package at.ac.tuwien.sepm.assignment.individual.service;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 
+import java.util.List;
+
 public interface OwnerService {
 
 
@@ -13,6 +15,7 @@ public interface OwnerService {
      * @throws NotFoundException will be thrown if the owner could not be found in the system.
      */
     Owner findOneById(Long id);
+    List<Owner> getAllOwner();
     Owner save(Owner owner);
 
 }

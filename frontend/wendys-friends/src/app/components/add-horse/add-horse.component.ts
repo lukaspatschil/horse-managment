@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-add-horse',
@@ -19,6 +20,9 @@ export class AddHorseComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.notes == null) {
+      this.notes = "";
+    }
     const horse = {
       name: this.name,
       notes: this.notes,
