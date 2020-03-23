@@ -1,8 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Globals} from '../global/globals';
 import {Observable} from 'rxjs';
 import {Owner} from '../dto/owner';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+}
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +27,10 @@ export class OwnerService {
   getOwnerById(id: number): Observable<Owner> {
     console.log('Load owner details for ' + id);
     return this.httpClient.get<Owner>(this.messageBaseUri + '/' + id);
+  }
+
+  addOwner(owner: Owner): Observable<Owner> {
+    return this.httpClient.post<Owner>(this.messageBaseUri, owner, httpOptions);
   }
 
 }

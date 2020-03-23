@@ -1,0 +1,14 @@
+<form class="form" (ngSubmit)="onSubmit()">
+    <div>
+        <h1 class="h1">Add a new Horse:</h1>
+    </div>
+    <div>
+        <ul class="ul">
+            <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name" placeholder="Add name..."></li>
+            <li class="li"><span class="span">Notes: </span><input type="text" name="notes" [(ngModel)]="notes" placeholder="Add notes..."></li>
+            <li class="li"><span class="span">Rating: </span><input type="text" name="rating" [(ngModel)]="rating" placeholder="Add rating..."></li>
+            <li class="li"><span class="span">Birthday: </span><input type="text" name="birthday" [(ngModel)]="birthday" placeholder="Add birthday..."></li>
+            <li><input type="submit" value="Submit" class="btn"></li>
+        </ul>
+    </div>
+</form>

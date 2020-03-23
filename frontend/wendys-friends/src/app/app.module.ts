@@ -1,22 +1,30 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './component/header/header.component';
-import {OwnerComponent} from './component/owner/owner.component';
+import {HeaderComponent} from './components/header/header.component';
+import {OwnerComponent} from './components/owner/owner.component';
 import {HttpClientModule} from '@angular/common/http';
+import { HorseComponent } from './components/horse/horse.component';
+import { AddOwnerComponent } from './components/add-owner/add-owner.component';
+import { AddHorseComponent } from './components/add-horse/add-horse.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    OwnerComponent
+    OwnerComponent,
+    HorseComponent,
+    AddOwnerComponent,
+    AddHorseComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

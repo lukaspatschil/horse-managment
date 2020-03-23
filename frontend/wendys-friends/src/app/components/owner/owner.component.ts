@@ -9,6 +9,7 @@ import {Owner} from '../../dto/owner';
 })
 export class OwnerComponent implements OnInit {
 
+  success = false;
   error = false;
   errorMessage = '';
   owner: Owner;
@@ -28,6 +29,13 @@ export class OwnerComponent implements OnInit {
   }
 
   /**
+  * Success flag will be deactivated, which clears the success message
+  */
+  vanishSuccess() {
+    this.success = false;
+  }
+
+  /**
    * Loads the owner for the specified id
    * @param id the id of the owner
    */
@@ -42,12 +50,29 @@ export class OwnerComponent implements OnInit {
     );
   }
 
+  /**
+   * Saves a new owner with a name
+   * @param name the name of the new owner
+   */
+  public addOwner(owner: Owner) {
+    this.ownerService.addOwner(owner).subscribe(owner => {
+      this.success = true;
+      this.owner = owner;
+    },
+    error => {
+      this.defaultServiceErrorHandling(error);
+    });
+  }
+
   private defaultServiceErrorHandling(error: any) {
     console.log(error);
     this.error = true;
     if (error.status === 0) {
       // If status is 0, the backend is probably down
       this.errorMessage = 'The backend seems not to be reachable';
+    } else if (error.status === 400) {
+      // If status is 400, the input was wrong
+      this.errorMessage = 'The input was wrong!';
     } else if (error.error.message === 'No message available') {
       // If no detailed error message is provided, fall back to the simple error name
       this.errorMessage = error.error.error;
@@ -55,5 +80,4 @@ export class OwnerComponent implements OnInit {
       this.errorMessage = error.error.message;
     }
   }
-
 }
