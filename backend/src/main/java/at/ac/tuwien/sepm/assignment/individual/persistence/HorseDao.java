@@ -30,4 +30,11 @@ public interface HorseDao {
      * @throws //add here
      */
     Horse save(Horse horse);
+
+    /**
+     * TODO: add doc
+     * @param id
+     * @return
+     */
+    void delete(Long id);
 }

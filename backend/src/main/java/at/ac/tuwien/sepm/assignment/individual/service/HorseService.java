@@ -27,4 +27,11 @@ public interface HorseService {
      * @throws RuntimeException  will be thrown if something goes wrong during data processing.
      */
     Horse save(Horse horse);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    void delete(Long id);
 }

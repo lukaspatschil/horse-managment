@@ -1,7 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.service.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
-import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import at.ac.tuwien.sepm.assignment.individual.util.Validator;
@@ -45,5 +44,14 @@ public class SimpleHorseService implements HorseService{
         // do some validation
 
         return horseDao.save(horse);
+    }
+
+    @Override
+    public void delete(Long id) {
+        LOGGER.trace("deleteHorsewithId({})", id);
+
+        //TODO validation?
+
+        horseDao.delete(id);
     }
 }

@@ -88,4 +88,11 @@ public class HorseJdbcDao implements HorseDao {
         horse.setId(((Number)keyHolder.getKeys().get("id")).longValue());
         return horse;
     }
+
+    @Override
+    public void delete(Long id) {
+        LOGGER.trace("Delete horse with id {}", id);
+        final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
+        jdbcTemplate.update(sql, new Object[] { id });
+    }
 }

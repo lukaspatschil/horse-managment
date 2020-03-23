@@ -1,9 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint.mapper;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
-import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
-import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
