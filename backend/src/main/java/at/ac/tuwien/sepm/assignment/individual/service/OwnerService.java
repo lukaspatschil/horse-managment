@@ -15,7 +15,25 @@ public interface OwnerService {
      * @throws NotFoundException will be thrown if the owner could not be found in the system.
      */
     Owner findOneById(Long id);
+
+    /**
+     *
+     * @return
+     */
     List<Owner> getAllOwner();
+
+    /**
+     *
+     * @param owner
+     * @return
+     */
     Owner save(Owner owner);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    void delete(Long id);
 
 }

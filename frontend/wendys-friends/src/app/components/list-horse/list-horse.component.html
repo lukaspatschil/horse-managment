@@ -1,1 +1,9 @@
-<p>list-horse works!</p>
+<div class="horse">
+    <p>
+        <label for="{{ horse.id }}">
+        <p>Horse: <span class="font-weight-bold">{{horse.name}}</span> with the ID: 
+            <span class="font-weight-bold">{{horse.id}}</span></p>
+        </label>
+        <button (click)="onDelete(horse)" class="del">X</button>
+    </p>
+</div>

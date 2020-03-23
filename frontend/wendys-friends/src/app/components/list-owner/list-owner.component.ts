@@ -15,7 +15,6 @@ export class ListOwnerComponent implements OnInit {
   constructor(private ownerService:OwnerService) { }
 
   ngOnInit(): void {
-    console.log(this.owner);
   }
 
   onDelete(owner) {

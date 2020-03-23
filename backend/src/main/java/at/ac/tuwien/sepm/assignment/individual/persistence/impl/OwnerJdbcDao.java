@@ -4,10 +4,8 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.OwnerDao;
 import java.lang.invoke.MethodHandles;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.lang.reflect.Type;
+import java.sql.*;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +61,8 @@ public class OwnerJdbcDao implements OwnerDao {
         return owner;
     }
 
-    @Override public Owner save(Owner owner) {
+    @Override
+    public Owner save(Owner owner) {
         LOGGER.trace("Save owner with name {}", owner.getName());
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -82,4 +81,10 @@ public class OwnerJdbcDao implements OwnerDao {
         return owner;
     }
 
+    @Override
+    public void delete(Long id) {
+        LOGGER.trace("Delete owner with id {}", id);
+        final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
+        jdbcTemplate.update(sql, new Object[] { id });
+    }
 }

@@ -7,12 +7,14 @@
 
 <div>
     <app-add-horse (addHorse)="addHorse($event)"></app-add-horse>
-    <div *ngIf="success" class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Added a new horse to the database!</h4>
-        <hr>
-        <p>This horse was added to the system:
-            <span class="font-weight-bold">{{horse.name}}</span> with the id
-            <span class="font-weight-bold">{{horse.id}}</span>
-        </p>
+    <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success! </strong> The horse
+        <span class="font-weight-bold">{{horse.name}}</span> with the id
+        <span class="font-weight-bold">{{horse.id}}</span> was added
+        <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    <app-list-owner *ngFor="let horse of horses" [horse]="horse" (deleteOwner)="deleteOwner($event)">
+    </app-list-owner>
 </div>

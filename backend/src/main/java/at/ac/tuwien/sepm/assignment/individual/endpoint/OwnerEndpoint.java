@@ -64,4 +64,14 @@ public class OwnerEndpoint {
                     "Error during saving owner", e);
         }
     }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        LOGGER.info("DELETE " + BASE_URL + "/{}", id);
+        try {
+            ownerService.delete(id);
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
 }

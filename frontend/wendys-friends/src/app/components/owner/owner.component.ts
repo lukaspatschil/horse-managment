@@ -18,7 +18,7 @@ export class OwnerComponent implements OnInit {
   constructor(private ownerService: OwnerService) {
   }
 
-  ngOnInit() {
+  ngOnInit():void {
     this.ownerService.getOwner().subscribe(owners => {
       this.owners = owners;
     });
@@ -60,12 +60,23 @@ export class OwnerComponent implements OnInit {
   public addOwner(owner: Owner) {
     this.ownerService.addOwner(owner).subscribe(owner => {
       this.owners.push(owner);
-      this.success = true;
       this.owner = owner;
+      this.success = true;
     },
     error => {
       this.defaultServiceErrorHandling(error);
     });
+  }
+
+  /**
+   * 
+   * @param error 
+   */
+  public deleteOwner(owner: Owner) {
+    // Remove From UI
+    this.owners = this.owners.filter(o => o.id !== owner.id);
+    // Remove from server
+    this.ownerService.deleteOwner(owner).subscribe();
   }
 
   private defaultServiceErrorHandling(error: any) {

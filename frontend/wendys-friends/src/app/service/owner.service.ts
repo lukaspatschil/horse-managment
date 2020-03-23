@@ -36,8 +36,20 @@ export class OwnerService {
     return this.httpClient.get<Owner[]>(this.messageBaseUri);
   }
 
+  /**
+   * 
+   * @param owner 
+   */
   addOwner(owner: Owner): Observable<Owner> {
     return this.httpClient.post<Owner>(this.messageBaseUri, owner, httpOptions);
+  }
+
+  /**
+   * 
+   * @param owner 
+   */
+  deleteOwner(owner:Owner):Observable<Owner> {
+    return this.httpClient.delete<Owner>(this.messageBaseUri + '/' + owner.id);
   }
 
 }

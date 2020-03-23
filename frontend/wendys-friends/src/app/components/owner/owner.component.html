@@ -7,13 +7,13 @@
 
 <div class="container mt-3">
     <app-add-owner (addOwner)="addOwner($event)"></app-add-owner>
-    <div *ngIf="success" class="alert alert-success" role="alert">
-        <h4 class="alert-heading">Added a new owner to the database!</h4>
-        <hr>
-        <p>This owner was added to the system:
-            <span class="font-weight-bold">{{owner.name}}</span> with the id
-            <span class="font-weight-bold">{{owner.id}}</span>
-        </p>
+    <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success! </strong> The owner
+        <span class="font-weight-bold">{{owner.name}}</span> with the id
+        <span class="font-weight-bold">{{owner.id}}</span> was added
+        <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <app-list-owner *ngFor="let owner of owners" [owner]="owner" (deleteOwner)="deleteOwner($event)">
     </app-list-owner>

@@ -41,8 +41,17 @@ public class SimpleOwnerService implements OwnerService {
     public Owner save(Owner owner) {
         LOGGER.trace("saveOwnerwithId({})", owner.getId());
 
-        // do some validation
+        //TODO: do some validation
 
         return ownerDao.save(owner);
+    }
+
+    @Override
+    public void delete(Long id) {
+        LOGGER.trace("deleteOwnerwithId({})", id);
+
+        //TODO validation?
+
+        ownerDao.delete(id);
     }
 }
