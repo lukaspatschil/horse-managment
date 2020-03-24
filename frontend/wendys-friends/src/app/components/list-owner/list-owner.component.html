@@ -1,7 +1,7 @@
 <div>
     <button class="owner" (click)="onShow()">
         <label class="marigingo" for="{{ owner.id }}">
-        <p class="marigingo">Owner: <span class="font-weight-bold">{{owner.name}}</span> with the ID: 
+            <p class="marigingo widthlimiter">Owner: <span class="font-weight-bold">{{owner.name}}</span> with the ID: 
             <span class="font-weight-bold">{{owner.id}}</span></p>
         </label>
         <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
@@ -11,7 +11,7 @@
     <div *ngIf="show">
         <form class="form" (ngSubmit)="onUpdate()">
             <ul>
-                <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name" value="{{ owner.name }}"></li>
+                <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name"></li>
                 <li class="li"><input type="submit" value="Update" class="btn"></li>
             </ul>
         </form>

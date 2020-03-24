@@ -8,7 +8,7 @@
             <li class="li"><span class="span">Notes: </span><input type="text" name="notes" [(ngModel)]="notes" placeholder="Add notes..." value=""></li>
             <li class="li"><span class="span">Rating: </span>
                 <select name="rating" [(ngModel)]="rating">
-                    <option name="rating" value="" selected disabled>Select the rating</option>
+                    <option name="rating" value="0" selected disabled>Select the rating</option>
                     <option name="rating" value="1">Rating of 1</option>
                     <option name="rating" value="2">Rating of 2</option>
                     <option name="rating" value="3">Rating of 3</option>
@@ -19,13 +19,13 @@
             <li class="li"><span class="span">Birthday: </span><input type="date" name="birthday" [(ngModel)]="birthday" placeholder="Add birthday..."></li>
             <li class="li"><span class="span">Owner: </span>
                 <select name="owner" [(ngModel)]="owner">
-                    <option name="owner" selected disabled>Select the owner</option>
+                    <option name="owner" value="0" selected disabled>Select the owner</option>
                     <option name="owner" *ngFor="let owner of owners" value="{{ owner.id }}">{{owner.name}} with id {{owner.id}}</option>
                 </select>
             </li>
             <li class="li"><span class="span">Race: </span>
                 <select name="race" [(ngModel)]="race">
-                    <option name="race" selected disabled>Select the race</option>
+                    <option name="race" value="0" selected disabled>Select the race</option>
                     <option name="race" value="ARABIAN">ARABIAN</option>
                     <option name="race" value="MORGAN">MORGAN</option>
                     <option name="race" value="PAINT">PAINT</option>

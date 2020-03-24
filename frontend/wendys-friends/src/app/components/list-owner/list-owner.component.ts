@@ -20,6 +20,7 @@ export class ListOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     this.show = false;
+    this.name = this.owner.name;
   }
 
   onDelete(owner) {

@@ -12,8 +12,8 @@
         <form class="form" (ngSubmit)="onUpdate()">
             <div>
                 <ul class="ul">
-                    <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name" value="{{ horse.name }}"></li>
-                    <li class="li"><span class="span">Notes: </span><input type="text" name="notes" [(ngModel)]="notes" value="{{ horse.notes }}"></li>
+                    <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name"></li>
+                    <li class="li"><span class="span">Notes: </span><input type="text" name="notes" [(ngModel)]="notes"></li>
                     <li class="li"><span class="span">Rating: </span>
                         <select name="rating" [(ngModel)]="rating">
                             <option name="rating" value="1" selected>Rating of 1</option>
@@ -23,7 +23,7 @@
                             <option name="rating" value="5">Rating of 5</option>
                         </select>
                     </li>
-                    <li class="li"><span class="span">Birthday: </span><input type="date" name="birthday" [(ngModel)]="birthday" value="{{ horse.birthday }}"></li>
+                    <li class="li"><span class="span">Birthday: </span><input type="date" name="birthday" [(ngModel)]="birthday"></li>
                     <li class="li"><span class="span">Owner: </span>
                         <select name="owner" [(ngModel)]="owner">
                             <option name="owner" selected disabled>Select the owner</option>
@@ -32,7 +32,6 @@
                     </li>
                     <li class="li"><span class="span">Race: </span>
                         <select name="race" [(ngModel)]="race">
-                            <option name="race" selected disabled>Select the race</option>
                             <option name="race" value="ARABIAN">ARABIAN</option>
                             <option name="race" value="MORGAN">MORGAN</option>
                             <option name="race" value="PAINT">PAINT</option>

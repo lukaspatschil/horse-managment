@@ -1,5 +1,6 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
@@ -60,6 +61,8 @@ public class HorseJdbcDao implements HorseDao {
         horse.setNotes(resultSet.getString("notes"));
         horse.setRating(resultSet.getInt("rating"));
         horse.setBirthday(resultSet.getDate("birthday").toLocalDate());
+        horse.setRace(HorseRace.valueOf(resultSet.getString("race")));
+        horse.setOwner(resultSet.getLong("owner"));
         horse.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
         horse.setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
         return horse;
