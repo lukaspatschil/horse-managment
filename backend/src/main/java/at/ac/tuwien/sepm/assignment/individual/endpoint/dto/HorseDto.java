@@ -2,7 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.Objects;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
@@ -14,17 +14,10 @@ public class HorseDto extends BaseDto {
     private LocalDate birthday;
     private HorseRace race;
     private Long owner;
+    private byte[] picture;
+    private String datatype;
 
     public HorseDto() {
-    }
-
-    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
-        super(id, created, updated);
-        this.name = name;
-        this.rating = rating;
-        this.birthday = birthday;
-        this.race = race;
-        this.owner = owner;
     }
 
     public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
@@ -35,6 +28,29 @@ public class HorseDto extends BaseDto {
         this.birthday = birthday;
         this.race = race;
         this.owner = owner;
+    }
+
+    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] picture, String datatype, LocalDateTime created, LocalDateTime updated) {
+        super(id, created, updated);
+        this.name = name;
+        this.rating = rating;
+        this.birthday = birthday;
+        this.race = race;
+        this.owner = owner;
+        this.picture = picture;
+        this.datatype = datatype;
+    }
+
+    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] picture, String datatype, LocalDateTime created, LocalDateTime updated) {
+        super(id, created, updated);
+        this.name = name;
+        this.notes = notes;
+        this.rating = rating;
+        this.birthday = birthday;
+        this.race = race;
+        this.owner = owner;
+        this.picture = picture;
+        this.datatype = datatype;
     }
 
     public LocalDate getBirthday() {
@@ -85,6 +101,22 @@ public class HorseDto extends BaseDto {
         this.owner = owner;
     }
 
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public String getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,12 +128,16 @@ public class HorseDto extends BaseDto {
             Objects.equals(notes, horseDto.notes) &&
             birthday.equals(horseDto.birthday) &&
             race == horseDto.race &&
-            owner.equals(horseDto.owner);
+            owner.equals(horseDto.owner) &&
+            Arrays.equals(picture, horseDto.picture) &&
+            datatype.equals(horseDto.datatype);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, notes, rating, birthday, race, owner);
+        int result = Objects.hash(super.hashCode(), name, notes, rating, birthday, race, owner, datatype);
+        result = 31 * result + Arrays.hashCode(picture);
+        return result;
     }
 
     @Override

@@ -14,6 +14,10 @@ public class HorseMapper {
         return new HorseDto(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), horse.getCreatedAt(), horse.getUpdatedAt());
     }
 
+    public HorseDto entityToDtoPicture(Horse horse) {
+        return new HorseDto(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), horse.getPicture(), horse.getDatatype(), horse.getCreatedAt(), horse.getUpdatedAt());
+    }
+
     public List<HorseDto> entitysToDto(List<Horse> horses) {
         List<HorseDto> horsesDtos = new ArrayList<>();
         for (Horse horse: horses) {
@@ -23,6 +27,6 @@ public class HorseMapper {
     }
 
     public Horse dtoToEntity(HorseDto horse) {
-        return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), horse.getCreatedAt(),  horse.getUpdatedAt());
+        return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), horse.getPicture(), horse.getDatatype(), horse.getCreatedAt(),  horse.getUpdatedAt());
     }
 }
