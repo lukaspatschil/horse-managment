@@ -33,4 +33,12 @@ public interface HorseService {
      * @return
      */
     void delete(Long id);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     * @return
+     */
+    Horse update(Long id, Horse horse);
 }

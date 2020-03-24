@@ -54,4 +54,13 @@ public class SimpleOwnerService implements OwnerService {
 
         ownerDao.delete(id);
     }
+
+    @Override
+    public Owner update(Long id, Owner owner) {
+        LOGGER.trace("updateOwnerWithID({})", id);
+
+        //TODO validation?
+
+       return ownerDao.update(id, owner);
+    }
 }

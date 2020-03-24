@@ -74,4 +74,15 @@ public class HorseEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         }
     }
+
+    @PutMapping(value = "/{id}")
+    public HorseDto updateOne(@RequestBody HorseDto newHorse, @PathVariable Long id) {
+        LOGGER.info("PUT " + BASE_URL + "/{}", id);
+        try {
+            Horse newHorseEntity = horseMapper.dtoToEntity(newHorse);
+            return horseMapper.entityToDto(horseService.update(id, newHorseEntity));
+        } catch (NotFoundException e) {
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
 }

@@ -83,7 +83,18 @@ public class OwnerJdbcDao implements OwnerDao {
     @Override
     public void delete(Long id) {
         LOGGER.trace("Delete owner with id {}", id);
+
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
         jdbcTemplate.update(sql, new Object[] { id });
+    }
+
+    @Override
+    public Owner update(Long id, Owner owner) {
+        LOGGER.trace("Update owner with id {}", owner.getId());
+
+        owner.setUpdatedAt(LocalDateTime.now());
+        final String sql = "UPDATE " + TABLE_NAME + " SET name='" + owner.getName() + "', updated_at='" + owner.getUpdatedAt() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+        return findOneById(id);
     }
 }

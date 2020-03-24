@@ -96,4 +96,50 @@ public class HorseJdbcDao implements HorseDao {
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
         jdbcTemplate.update(sql, new Object[] { id });
     }
+
+    @Override
+    public Horse update(Long id, Horse horse) {
+        LOGGER.trace("Update horse with id {}", horse.getId());
+
+        horse.setUpdatedAt(LocalDateTime.now());
+        final String sql = "UPDATE " + TABLE_NAME + " SET updated_at='" + horse.getUpdatedAt() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+        return findOneById(id);
+    }
+
+    @Override
+    public void updateName(Long id, Horse horse) {
+        final String sql = "UPDATE " + TABLE_NAME + " SET name='" + horse.getName() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public void updateRace(Long id, Horse horse) {
+        final String sql = "UPDATE " + TABLE_NAME + " SET race='" + horse.getRace() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public void updateBirthday(Long id, Horse horse) {
+        final String sql = "UPDATE " + TABLE_NAME + " SET birthday='" + horse.getBirthday() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public void updateOwner(Long id, Horse horse) {
+        final String sql = "UPDATE " + TABLE_NAME + " SET owner='" + horse.getOwner() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public void updateRating(Long id, Horse horse) {
+        final String sql = "UPDATE " + TABLE_NAME + " SET rating='" + horse.getRating() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+    }
+
+    @Override
+    public void updateNotes(Long id, Horse horse) {
+        final String sql = "UPDATE " + TABLE_NAME + " SET notes='" + horse.getNotes() + "' WHERE id=" + id;
+        jdbcTemplate.update(sql);
+    }
 }

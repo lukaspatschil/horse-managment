@@ -34,4 +34,12 @@ public interface OwnerService {
      */
     void delete(Long id);
 
+    /**
+     *
+     * @param id
+     * @param owner
+     * @return
+     */
+    Owner update(Long id, Owner owner);
+
 }

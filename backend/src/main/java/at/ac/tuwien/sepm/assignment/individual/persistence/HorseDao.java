@@ -36,4 +36,54 @@ public interface HorseDao {
      * @return
      */
     void delete(Long id);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     * @return
+     */
+    Horse update(Long id, Horse horse);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     */
+    void updateName(Long id, Horse horse);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     */
+    void updateRace(Long id, Horse horse);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     */
+    void updateBirthday(Long id, Horse horse);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     */
+    void updateOwner(Long id, Horse horse);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     */
+    void updateRating(Long id, Horse horse);
+
+    /**
+     *
+     * @param id
+     * @param horse
+     */
+    void updateNotes(Long id, Horse horse);
 }
