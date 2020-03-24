@@ -1,5 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { not } from '@angular/compiler/src/output/output_ast';
+import { OwnerService } from '../../service/owner.service';
+
+import { Owner } from 'src/app/dto/owner';
 
 @Component({
   selector: 'app-add-horse',
@@ -7,14 +10,17 @@ import { not } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./add-horse.component.scss']
 })
 export class AddHorseComponent implements OnInit {
+  @Input() owners: Owner[];
   @Output() addHorse: EventEmitter<any> = new EventEmitter();
 
   name:string;
   notes:string;
   rating:number;
   birthday:string;
+  owner:number;
+  race:string;
 
-  constructor() { }
+  constructor(private ownerService:OwnerService) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +33,9 @@ export class AddHorseComponent implements OnInit {
       name: this.name,
       notes: this.notes,
       rating: this.rating,
-      birthday: this.birthday
+      birthday: this.birthday,
+      owner: this.owner,
+      race: this.race
     }
 
     console.log(horse);

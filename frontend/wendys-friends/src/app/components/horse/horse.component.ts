@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HorseService} from '../../service/horse.service';
 import { Horse } from 'src/app/dto/horse';
+import {OwnerService} from '../../service/owner.service';
+import {Owner} from '../../dto/owner';
 
 @Component({
   selector: 'app-horse',
@@ -14,12 +16,20 @@ export class HorseComponent implements OnInit {
   errorMessage = '';
   horses:Horse[];
   horse: Horse;
+  owners:Owner[];
 
-  constructor(private horseService: HorseService) { }
+  constructor(private horseService: HorseService, private ownerService: OwnerService) { }
 
   ngOnInit(): void {
     this.horseService.getHorse().subscribe(horses => {
       this.horses = horses;
+    },
+    error => {
+      this.defaultServiceErrorHandling(error);
+    });
+
+    this.ownerService.getOwner().subscribe(owners => {
+      this.owners = owners;
     },
     error => {
       this.defaultServiceErrorHandling(error);
