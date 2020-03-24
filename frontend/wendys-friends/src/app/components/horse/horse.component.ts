@@ -65,6 +65,13 @@ export class HorseComponent implements OnInit {
     });
   }
 
+  public updateHorse(horse: Horse) {
+    this.horseService.updateHorse(horse).subscribe(horse =>{},
+      error => {
+        this.defaultServiceErrorHandling(error);
+      });
+  }
+
   /**
    * 
    * @param error 

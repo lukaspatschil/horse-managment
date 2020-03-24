@@ -41,4 +41,8 @@ export class HorseService {
   deleteHorse(horse:Horse):Observable<Horse> {
     return this.httpClient.delete<Horse>(this.messageBaseUri + '/' + horse.id);
   }
+
+  updateHorse(horse:Horse):Observable<Horse> {
+    return this.httpClient.put<Horse>(this.messageBaseUri + '/' + horse.id, horse, httpOptions);
+  }
 }

@@ -52,4 +52,12 @@ export class OwnerService {
     return this.httpClient.delete<Owner>(this.messageBaseUri + '/' + owner.id);
   }
 
+  /**
+   * 
+   * @param owner 
+   */
+  updateOwner(owner:Owner):Observable<Owner> {
+    return this.httpClient.put<Owner>(this.messageBaseUri + '/' + owner.id, owner, httpOptions);
+  }
+
 }

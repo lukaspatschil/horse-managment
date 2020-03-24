@@ -21,6 +21,62 @@
 .owner {
     background: #f4f4f4;
     padding: 10px;
-    border-bottom: 1px #ccc dotted;
+    border: 1px #ccc dotted;
     height: 3em;
+    width: 100%;
+    text-align: left;
+    outline: none;
+}
+
+.owner:active {
+    outline: none;
+    background-color: #666;
+    color: white;
+}
+
+.marigingo {
+    margin: 0;
+}
+
+//from add horse
+.form {
+    margin: 0em;
+}
+
+.form input[type='text'] {
+    flex: 2;
+    padding: 5px;
+}
+
+.form input[type='date'] {
+    flex: 2;
+    padding: 5px;
+}
+
+.form select {
+    flex: 2;
+    padding: 5px;
+}
+
+.form input[type='submit'] {
+    width: 100%;
+}
+
+.ul {
+    width: 100%;
+    margin: 0.5em 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.li {
+    display: flex;
+}
+
+.h1 {
+    font-size: 2em;
+}
+
+.span {
+    width: 5rem;
 }

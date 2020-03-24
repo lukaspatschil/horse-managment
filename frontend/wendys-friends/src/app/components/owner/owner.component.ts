@@ -89,6 +89,13 @@ export class OwnerComponent implements OnInit {
     });
   }
 
+  public updateOwner(owner: Owner) {
+    this.ownerService.updateOwner(owner).subscribe(owner =>{},
+      error => {
+        this.defaultServiceErrorHandling(error);
+      });
+  }
+
   private defaultServiceErrorHandling(error: any) {
     console.log(error);
     this.error = true;
