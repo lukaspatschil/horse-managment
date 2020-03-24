@@ -76,10 +76,17 @@ export class OwnerComponent implements OnInit {
    * @param error 
    */
   public deleteOwner(owner: Owner) {
-    // Remove From UI
-    this.owners = this.owners.filter(o => o.id !== owner.id);
     // Remove from server
-    this.ownerService.deleteOwner(owner).subscribe();
+    this.ownerService.deleteOwner(owner).subscribe(owner => {},
+      error => {
+        this.defaultServiceErrorHandling(error);
+    });
+    this.ownerService.getOwner().subscribe(owners => {
+      this.owners = owners;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+    });
   }
 
   private defaultServiceErrorHandling(error: any) {

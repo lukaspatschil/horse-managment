@@ -16,6 +16,5 @@ CREATE TABLE IF NOT EXISTS horse
   birthday      DATE    NOT NULL,
   created_at    DATETIME    NOT NULL,
   updated_at    DATETIME    NOT NULL,
-  owner         BIGINT      NOT NULL REFERENCES owner(id),
-  picture       BLOB        NOT NULL
+  owner         BIGINT      NOT NULL REFERENCES owner(id)
 );

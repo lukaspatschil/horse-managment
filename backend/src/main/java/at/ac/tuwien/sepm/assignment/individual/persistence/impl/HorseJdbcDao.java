@@ -72,16 +72,18 @@ public class HorseJdbcDao implements HorseDao {
 
         horse.setCreatedAt(currentTime);
         horse.setUpdatedAt(currentTime);
-        final String sql = "INSERT INTO " + TABLE_NAME + " (name, notes, rating, birthday, created_at, updated_at)" + " VALUES (?,?,?,?,?,?);";
+        final String sql = "INSERT INTO " + TABLE_NAME + " (name, race, notes, rating, birthday, created_at, updated_at, owner)" + " VALUES (?,?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, horse.getName());
-            stmt.setObject(2, horse.getNotes());
-            stmt.setObject(3, horse.getRating());
-            stmt.setObject(4, horse.getBirthday());
-            stmt.setObject(5 , horse.getCreatedAt());
-            stmt.setObject(6, horse.getUpdatedAt());
+            stmt.setString(2, horse.getRace().toString());
+            stmt.setObject(3, horse.getNotes());
+            stmt.setObject(4, horse.getRating());
+            stmt.setObject(5, horse.getBirthday());
+            stmt.setObject(6 , horse.getCreatedAt());
+            stmt.setObject(7, horse.getUpdatedAt());
+            stmt.setString(8, horse.getOwner().toString());
             return stmt;
         }, keyHolder);
         horse.setId(((Number)keyHolder.getKeys().get("id")).longValue());
