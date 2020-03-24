@@ -5,9 +5,9 @@ import { Horse } from 'src/app/dto/horse';
 import { Owner } from 'src/app/dto/owner';
 
 @Component({
-  selector: 'app-list-horse',
-  templateUrl: './list-horse.component.html',
-  styleUrls: ['./list-horse.component.scss']
+  selector: 'app-horse-item',
+  templateUrl: './horse-item.component.html',
+  styleUrls: ['./horse-item.component.scss']
 })
 export class ListHorseComponent implements OnInit {
   @Input() owners: Owner[];
@@ -30,9 +30,7 @@ export class ListHorseComponent implements OnInit {
     this.notes = this.horse.notes;
     this.rating = this.horse.rating;
     this.birthday = this.horse.birthday;
-    console.log(this.horse.race);
     this.race = this.horse.race;
-    console.log(this.horse.owner);
     this.owner = this.horse.owner;
   }
 

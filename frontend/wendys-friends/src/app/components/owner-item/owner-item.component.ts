@@ -4,9 +4,9 @@ import { OwnerService } from '../../service/owner.service';
 import { Owner } from 'src/app/dto/owner';
 
 @Component({
-  selector: 'app-list-owner',
-  templateUrl: './list-owner.component.html',
-  styleUrls: ['./list-owner.component.scss']
+  selector: 'app-owner-item',
+  templateUrl: './owner-item.component.html',
+  styleUrls: ['./owner-item.component.scss']
 })
 export class ListOwnerComponent implements OnInit {
   @Input() owner: Owner;

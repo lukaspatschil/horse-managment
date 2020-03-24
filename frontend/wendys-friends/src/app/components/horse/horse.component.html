@@ -14,5 +14,6 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <app-list-horse *ngFor="let horse of horses" [owners]="owners" [horse]="horse" (deleteHorse)="deleteHorse($event)" (updateHorse)="updateHorse($event)"></app-list-horse>
+    <app-horse-item *ngFor="let horse of horses" [owners]="owners" [horse]="horse" (deleteHorse)="deleteHorse($event)" (updateHorse)="updateHorse($event)">
+    </app-horse-item>
 </div>

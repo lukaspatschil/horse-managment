@@ -25,7 +25,7 @@ export class AddHorseComponent implements OnInit {
   ngOnInit(): void {
     this.rating = 0;
     this.owner = 0;
-    this.race= 0;
+    this.race= "0";
   }
 
   onSubmit() {
