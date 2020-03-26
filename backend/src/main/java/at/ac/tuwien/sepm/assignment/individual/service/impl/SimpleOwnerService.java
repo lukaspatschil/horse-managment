@@ -63,4 +63,13 @@ public class SimpleOwnerService implements OwnerService {
 
        return ownerDao.update(id, owner);
     }
+
+    @Override
+    public List<Owner> searchOwner(Owner param) {
+        LOGGER.trace("searchOwner({})", param);
+
+        //TODO validation?
+
+        return ownerDao.searchOwner(param);
+    }
 }

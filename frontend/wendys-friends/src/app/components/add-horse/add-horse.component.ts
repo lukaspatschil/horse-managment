@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { not } from '@angular/compiler/src/output/output_ast';
 import { OwnerService } from '../../service/owner.service';
 
 import { Owner } from 'src/app/dto/owner';
@@ -19,6 +18,9 @@ export class AddHorseComponent implements OnInit {
   birthday:string;
   owner:number;
   race:string;
+  image:File;
+  imageEncode:string;
+  fileList:FileList;
 
   constructor(private ownerService:OwnerService) { }
 
@@ -38,7 +40,8 @@ export class AddHorseComponent implements OnInit {
       rating: this.rating,
       birthday: this.birthday,
       owner: this.owner,
-      race: this.race
+      race: this.race,
+      image: this.imageEncode
     }
 
     console.log(horse);
@@ -46,4 +49,30 @@ export class AddHorseComponent implements OnInit {
     this.addHorse.emit(horse);
   }
 
+  picked(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      this.image = file;
+      this.handleInputChange(file); // turn into base64
+    } else {
+      alert('No file selected');
+    }
+  }
+
+  handleInputChange(files: any) {
+    const file = files;
+    const reader = new FileReader();
+
+    reader.onloadend = this._handleReaderLoaded.bind(this);
+    reader.readAsDataURL(file);
+  }
+  _handleReaderLoaded(e: any) {
+    const reader = e.target;
+    const base64result = reader.result.substr(reader.result);
+
+    this.imageEncode = base64result;
+
+    console.log(this.imageEncode);
+  }
 }

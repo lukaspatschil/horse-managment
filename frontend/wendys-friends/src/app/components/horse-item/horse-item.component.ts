@@ -26,6 +26,7 @@ export class ListHorseComponent implements OnInit {
   constructor(private horseService:HorseService) { }
 
   ngOnInit(): void {
+    console.log(this.horse.image);
     this.name = this.horse.name;
     this.notes = this.horse.notes;
     this.rating = this.horse.rating;
@@ -48,6 +49,7 @@ export class ListHorseComponent implements OnInit {
     this.horse.rating = this.rating;
     this.horse.birthday = this.birthday;
     this.horse.race = this.race;
+    this.horse.owner = this.owner;
     console.log(this.horse);
     this.updateHorse.emit(this.horse);
   }

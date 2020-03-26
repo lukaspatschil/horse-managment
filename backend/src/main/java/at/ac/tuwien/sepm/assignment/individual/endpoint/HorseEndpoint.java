@@ -38,17 +38,17 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.findOneById(id));
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         }
     }
 
     @GetMapping
     public List<HorseDto> getAllHorse() {
-        LOGGER.info("GET all horses");
+        LOGGER.info("GET " + BASE_URL + " all horses");
         try {
             return horseMapper.entitysToDto(horseService.getAllHorse());
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         }
     }
 
@@ -58,7 +58,7 @@ public class HorseEndpoint {
         try {
             return horseMapper.entitysToDto(horseService.searchHorse(horseMapper.dtoToEntity(params)));
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         }
     }
 
@@ -72,7 +72,7 @@ public class HorseEndpoint {
         } catch (ValidationException e) {
             throw new
                 ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                "Error during saving owner", e);
+                "Error during saving horse", e);
         }
     }
 
@@ -82,7 +82,7 @@ public class HorseEndpoint {
         try {
             horseService.delete(id);
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         }
     }
 
@@ -93,7 +93,7 @@ public class HorseEndpoint {
             Horse newHorseEntity = horseMapper.dtoToEntity(newHorse);
             return horseMapper.entityToDto(horseService.update(id, newHorseEntity));
         } catch (NotFoundException e) {
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         }
     }
 }

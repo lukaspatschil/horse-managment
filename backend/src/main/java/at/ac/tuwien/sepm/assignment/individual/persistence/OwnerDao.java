@@ -44,4 +44,6 @@ public interface OwnerDao {
      * @return
      */
     Owner update(Long id, Owner owner);
+
+    List<Owner> searchOwner(Owner param);
 }

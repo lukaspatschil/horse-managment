@@ -1,8 +1,7 @@
 <div>
     <button class="owner" (click)="onShow()">
         <label class="marigingo" for="{{ owner.id }}">
-            <p class="marigingo widthlimiter">Owner: <span class="font-weight-bold">{{owner.name}}</span> with the ID: 
-            <span class="font-weight-bold">{{owner.id}}</span></p>
+            <p class="marigingo widthlimiter">Horse Owner: <span class="font-weight-bold">{{owner.name}}</span></p>
         </label>
         <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
             <span aria-hidden="true">&times;</span>

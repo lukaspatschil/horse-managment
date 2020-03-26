@@ -42,4 +42,11 @@ public interface OwnerService {
      */
     Owner update(Long id, Owner owner);
 
+    /**
+     *
+     * @param param
+     * @return
+     */
+    List<Owner> searchOwner(Owner param);
+
 }

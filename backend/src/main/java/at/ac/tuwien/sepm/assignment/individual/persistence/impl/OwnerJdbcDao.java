@@ -109,4 +109,18 @@ public class OwnerJdbcDao implements OwnerDao {
         });
         return findOneById(id);
     }
+
+    @Override
+    public List<Owner> searchOwner(Owner param) {
+        LOGGER.trace("Search owners with params {}", param);
+
+        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE ?";
+
+        List<Owner> owners = jdbcTemplate.query(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, param.getName());
+            return stmt;
+        }, this::mapRow);
+        return owners;
+    }
 }

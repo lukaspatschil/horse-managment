@@ -6,6 +6,7 @@ export class Horse {
       public rating: number,
       public birthday: string,
       public owner: number,
-      public race: string) {
+      public race: string,
+      public image: string) {
     }
   }

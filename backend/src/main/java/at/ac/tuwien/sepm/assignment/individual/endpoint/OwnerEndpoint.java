@@ -43,9 +43,19 @@ public class OwnerEndpoint {
 
     @GetMapping
     public List<OwnerDto> getAllOwner() {
-        LOGGER.info("GET all owner");
+        LOGGER.info("GET " + BASE_URL + " all owners");
         try {
             return ownerMapper.entitysToDto(ownerService.getAllOwner());
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
+
+    @GetMapping("/search")
+    public List<OwnerDto> searchOwner(@RequestParam("params") OwnerDto params) {
+        LOGGER.info("GET (search) " + BASE_URL + "/{}", params);
+        try {
+            return ownerMapper.entitysToDto(ownerService.searchOwner(ownerMapper.dtoToEntity(params)));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         }
