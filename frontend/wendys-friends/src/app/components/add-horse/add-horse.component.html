@@ -20,18 +20,20 @@
             <li class="li"><span class="span">Owner: </span>
                 <select name="owner" [(ngModel)]="owner">
                     <option name="owner" value="0" selected disabled>Select the owner</option>
-                    <option name="owner" *ngFor="let owner of owners" value="{{ owner.id }}">{{owner.name}} with id {{owner.id}}</option>
+                    <option name="owner" *ngFor="let owner of owners" value="{{ owner.id }}">{{owner.name}}</option>
                 </select>
             </li>
             <li class="li"><span class="span">Race: </span>
                 <select name="race" [(ngModel)]="race">
                     <option name="race" value="0" selected disabled>Select the race</option>
-                    <option name="race" value="ARABIAN">ARABIAN</option>
-                    <option name="race" value="MORGAN">MORGAN</option>
-                    <option name="race" value="PAINT">PAINT</option>
-                    <option name="race" value="APPALOOSA">APPALOOSA</option>
+                    <option name="race" value="ARABIAN">Arabian</option>
+                    <option name="race" value="MORGAN">Morgan</option>
+                    <option name="race" value="PAINT">Paint</option>
+                    <option name="race" value="APPALOOSA">Appaloosa</option>
                 </select>
-
+            </li>
+            <li class="li"><span class="span">Image: </span>
+                <input type="file" name="image" [(ngModel)]="fileList" accept=".png,.jpg,.jpeg">
             </li>
             <li class="li"><input type="submit" value="Submit" class="btn"></li>
         </ul>

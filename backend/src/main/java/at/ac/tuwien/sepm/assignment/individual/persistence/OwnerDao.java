@@ -4,7 +4,6 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import org.springframework.dao.DataAccessException;
 
-import java.nio.file.LinkOption;
 import java.util.List;
 
 public interface OwnerDao {

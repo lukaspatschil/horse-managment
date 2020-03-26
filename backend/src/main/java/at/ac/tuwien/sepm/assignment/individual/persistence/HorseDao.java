@@ -45,45 +45,5 @@ public interface HorseDao {
      */
     Horse update(Long id, Horse horse);
 
-    /**
-     *
-     * @param id
-     * @param horse
-     */
-    void updateName(Long id, Horse horse);
-
-    /**
-     *
-     * @param id
-     * @param horse
-     */
-    void updateRace(Long id, Horse horse);
-
-    /**
-     *
-     * @param id
-     * @param horse
-     */
-    void updateBirthday(Long id, Horse horse);
-
-    /**
-     *
-     * @param id
-     * @param horse
-     */
-    void updateOwner(Long id, Horse horse);
-
-    /**
-     *
-     * @param id
-     * @param horse
-     */
-    void updateRating(Long id, Horse horse);
-
-    /**
-     *
-     * @param id
-     * @param horse
-     */
-    void updateNotes(Long id, Horse horse);
+    List<Horse> searchHorse(Horse param);
 }

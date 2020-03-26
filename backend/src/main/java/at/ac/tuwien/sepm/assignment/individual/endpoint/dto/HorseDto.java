@@ -2,9 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
-import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
 public class HorseDto extends BaseDto {
 
@@ -14,20 +12,22 @@ public class HorseDto extends BaseDto {
     private LocalDate birthday;
     private HorseRace race;
     private Long owner;
+    private String image;
 
     public HorseDto() {
     }
 
-    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, String image, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
         this.race = race;
         this.owner = owner;
+        this.image = image;
     }
 
-    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, String image, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -35,6 +35,7 @@ public class HorseDto extends BaseDto {
         this.birthday = birthday;
         this.race = race;
         this.owner = owner;
+        this.image = image;
     }
 
     public LocalDate getBirthday() {
@@ -83,6 +84,14 @@ public class HorseDto extends BaseDto {
 
     public void setOwner(Long owner) {
         this.owner = owner;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

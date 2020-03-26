@@ -12,6 +12,7 @@ import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -51,13 +52,23 @@ public class HorseEndpoint {
         }
     }
 
+    @GetMapping("/search")
+    public List<HorseDto> searchHorse(@RequestParam("params") HorseDto params) {
+        LOGGER.info("GET (search) " + BASE_URL + "/{}", params);
+        try {
+            return horseMapper.entitysToDto(horseService.searchHorse(horseMapper.dtoToEntity(params)));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        }
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public HorseDto post(@RequestBody HorseDto horse) {
         LOGGER.info("POST " + BASE_URL + "/{}", horse.getName());
         try {
-            Horse horseEntity = horseMapper.dtoToEntity(horse);
-            return horseMapper.entityToDto(horseService.save(horseEntity));
+            LOGGER.error("test");
+            return horseMapper.entityToDto(horseService.save(horseMapper.dtoToEntity(horse)));
         } catch (ValidationException e) {
             throw new
                 ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,

@@ -41,4 +41,11 @@ public interface HorseService {
      * @return
      */
     Horse update(Long id, Horse horse);
+
+    /**
+     *
+     * @param param
+     * @return
+     */
+    List<Horse> searchHorse(Horse param);
 }

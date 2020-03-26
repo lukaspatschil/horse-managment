@@ -72,7 +72,8 @@ public class OwnerJdbcDao implements OwnerDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        stmt.setString(1, owner.getName());         stmt.setObject(2 , owner.getCreatedAt());
+        stmt.setString(1, owner.getName());
+        stmt.setObject(2 , owner.getCreatedAt());
         stmt.setObject(3, owner.getUpdatedAt());
         return stmt;
         }, keyHolder);
@@ -85,7 +86,11 @@ public class OwnerJdbcDao implements OwnerDao {
         LOGGER.trace("Delete owner with id {}", id);
 
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql, new Object[] { id });
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, id);
+            return stmt;
+        });
     }
 
     @Override
@@ -93,8 +98,15 @@ public class OwnerJdbcDao implements OwnerDao {
         LOGGER.trace("Update owner with id {}", owner.getId());
 
         owner.setUpdatedAt(LocalDateTime.now());
-        final String sql = "UPDATE " + TABLE_NAME + " SET name='" + owner.getName() + "', updated_at='" + owner.getUpdatedAt() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
+        final String sql = "UPDATE " + TABLE_NAME + " SET name=?,updated_at=? WHERE id=?";
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, owner.getName());
+            stmt.setObject(2 , owner.getUpdatedAt());
+            stmt.setLong(3, id);
+            return stmt;
+        });
         return findOneById(id);
     }
 }

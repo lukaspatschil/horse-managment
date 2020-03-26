@@ -5,10 +5,7 @@ import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import java.lang.invoke.MethodHandles;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +60,7 @@ public class HorseJdbcDao implements HorseDao {
         horse.setBirthday(resultSet.getDate("birthday").toLocalDate());
         horse.setRace(HorseRace.valueOf(resultSet.getString("race")));
         horse.setOwner(resultSet.getLong("owner"));
+        horse.setImage(resultSet.getBytes("image"));
         horse.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
         horse.setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
         return horse;
@@ -75,18 +73,19 @@ public class HorseJdbcDao implements HorseDao {
 
         horse.setCreatedAt(currentTime);
         horse.setUpdatedAt(currentTime);
-        final String sql = "INSERT INTO " + TABLE_NAME + " (name, race, notes, rating, birthday, created_at, updated_at, owner)" + " VALUES (?,?,?,?,?,?,?,?);";
+        final String sql = "INSERT INTO " + TABLE_NAME + " (name, race, notes, rating, birthday, created_at, updated_at, owner, image)" + " VALUES (?,?,?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, horse.getName());
             stmt.setString(2, horse.getRace().toString());
-            stmt.setObject(3, horse.getNotes());
-            stmt.setObject(4, horse.getRating());
+            stmt.setString(3, horse.getNotes());
+            stmt.setInt(4, horse.getRating());
             stmt.setObject(5, horse.getBirthday());
             stmt.setObject(6 , horse.getCreatedAt());
             stmt.setObject(7, horse.getUpdatedAt());
-            stmt.setString(8, horse.getOwner().toString());
+            stmt.setLong(8, horse.getOwner());
+            stmt.setObject(9, horse.getImage(), Types.BLOB);
             return stmt;
         }, keyHolder);
         horse.setId(((Number)keyHolder.getKeys().get("id")).longValue());
@@ -97,7 +96,11 @@ public class HorseJdbcDao implements HorseDao {
     public void delete(Long id) {
         LOGGER.trace("Delete horse with id {}", id);
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(sql, new Object[] { id });
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, id);
+            return stmt;
+        });
     }
 
     @Override
@@ -105,44 +108,40 @@ public class HorseJdbcDao implements HorseDao {
         LOGGER.trace("Update horse with id {}", horse.getId());
 
         horse.setUpdatedAt(LocalDateTime.now());
-        final String sql = "UPDATE " + TABLE_NAME + " SET updated_at='" + horse.getUpdatedAt() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
+        final String sql = "UPDATE " + TABLE_NAME +
+            " SET name = ?, race=?,notes=?,rating=?,birthday=?,updated_at=?, owner=?,image=? WHERE id = ? ";
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, horse.getName());
+            stmt.setString(2, horse.getRace().toString());
+            stmt.setObject(3, horse.getNotes(), Types.VARCHAR);
+            stmt.setInt(4, horse.getRating());
+            stmt.setObject(5, horse.getBirthday());
+            stmt.setObject(6, horse.getUpdatedAt());
+            stmt.setLong(7, horse.getOwner());
+            stmt.setObject(8, horse.getImage(), Types.BLOB);
+            stmt.setLong(9, id);
+            return stmt;
+        });
         return findOneById(id);
     }
 
     @Override
-    public void updateName(Long id, Horse horse) {
-        final String sql = "UPDATE " + TABLE_NAME + " SET name='" + horse.getName() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
-    }
+    public List<Horse> searchHorse(Horse param) {
+        LOGGER.trace("Search horses with params {}", param);
 
-    @Override
-    public void updateRace(Long id, Horse horse) {
-        final String sql = "UPDATE " + TABLE_NAME + " SET race='" + horse.getRace() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
-    }
+        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE LOWER(?) AND notes LIKE LOWER(?) AND race=? AND rating=? AND birthday <= ?";
 
-    @Override
-    public void updateBirthday(Long id, Horse horse) {
-        final String sql = "UPDATE " + TABLE_NAME + " SET birthday='" + horse.getBirthday() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
-    }
-
-    @Override
-    public void updateOwner(Long id, Horse horse) {
-        final String sql = "UPDATE " + TABLE_NAME + " SET owner='" + horse.getOwner() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
-    }
-
-    @Override
-    public void updateRating(Long id, Horse horse) {
-        final String sql = "UPDATE " + TABLE_NAME + " SET rating='" + horse.getRating() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
-    }
-
-    @Override
-    public void updateNotes(Long id, Horse horse) {
-        final String sql = "UPDATE " + TABLE_NAME + " SET notes='" + horse.getNotes() + "' WHERE id=" + id;
-        jdbcTemplate.update(sql);
+        List<Horse> horses = jdbcTemplate.query(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, param.getName());
+            stmt.setString(2, param.getNotes());
+            stmt.setString(3, param.getRace().toString());
+            stmt.setInt(4, param.getRating());
+            stmt.setObject(5, param.getBirthday());
+            return stmt;
+        }, this::mapRow);
+        return horses;
     }
 }

@@ -13,8 +13,9 @@ CREATE TABLE IF NOT EXISTS horse
   race          ENUM('ARABIAN', 'MORGAN', 'PAINT', 'APPALOOSA')     NOT NULL,
   notes         VARCHAR,
   rating        INTEGER     NOT NULL CHECK(rating BETWEEN 1 AND 5),
-  birthday      DATE    NOT NULL,
+  birthday      DATE        NOT NULL,
   created_at    DATETIME    NOT NULL,
   updated_at    DATETIME    NOT NULL,
-  owner         BIGINT      NOT NULL REFERENCES owner(id)
+  owner         BIGINT      NOT NULL REFERENCES owner(id),
+  image         BLOB        NOT NULL
 );

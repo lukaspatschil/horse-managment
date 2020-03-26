@@ -59,24 +59,17 @@ public class SimpleHorseService implements HorseService{
     public Horse update(Long id, Horse horse) {
         LOGGER.trace("updateOwnerWithID({})", id);
 
-        //TODO validation?
-        if (horse.getName() != null)
-            horseDao.updateName(id, horse);
-
-        if (horse.getNotes() != null)
-            horseDao.updateNotes(id, horse);
-
-        horseDao.updateRating(id, horse);
-
-        if (horse.getOwner() != null)
-            horseDao.updateOwner(id, horse);
-
-        if (horse.getBirthday() != null)
-            horseDao.updateBirthday(id, horse);
-
-        if (horse.getRace() != null)
-            horseDao.updateRace(id, horse);
+        //TODO validation if empty replace with current value
 
         return horseDao.update(id, horse);
+    }
+
+    @Override
+    public List<Horse> searchHorse(Horse param) {
+        LOGGER.trace("searchHorse({})", param);
+
+        //TODO validation
+
+        return horseDao.searchHorse(param);
     }
 }

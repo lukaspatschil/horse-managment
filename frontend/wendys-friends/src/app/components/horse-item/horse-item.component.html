@@ -1,8 +1,7 @@
 <div>
     <button class="horse" (click)="onShow()">
         <label for="{{ horse.id }}">
-        <p>Horse: <span class="font-weight-bold">{{horse.name}}</span> with the ID: 
-            <span class="font-weight-bold">{{horse.id}}</span></p>
+        <p>Horse: <span class="font-weight-bold">{{horse.name}}</span></p>
         </label>
         <button (click)="onDelete(horse)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -27,17 +26,19 @@
                     <li class="li"><span class="span">Owner: </span>
                         <select name="owner" [(ngModel)]="owner">
                             <option name="owner" selected disabled>Select the owner</option>
-                            <option name="owner" *ngFor="let owner of owners" value="{{ owner.id }}">{{owner.name}} with id {{owner.id}}</option>
+                            <option name="owner" *ngFor="let owner of owners" value="{{ owner.id }}">{{owner.name}}</option>
                         </select>
                     </li>
                     <li class="li"><span class="span">Race: </span>
                         <select name="race" [(ngModel)]="race">
-                            <option name="race" value="ARABIAN">ARABIAN</option>
-                            <option name="race" value="MORGAN">MORGAN</option>
-                            <option name="race" value="PAINT">PAINT</option>
-                            <option name="race" value="APPALOOSA">APPALOOSA</option>
+                            <option name="race" value="ARABIAN">Arabian</option>
+                            <option name="race" value="MORGAN">Morgan</option>
+                            <option name="race" value="PAINT">Paint</option>
+                            <option name="race" value="APPALOOSA">Appaloosa</option>
                         </select>
-
+                    </li>
+                    <li class="li"><span class="span">Image: </span>
+                        <input type="file" name="image" accept=".png,.jpg,.jpeg">
                     </li>
                     <li class="li"><input type="submit" value="Update" class="btn"></li>
                 </ul>

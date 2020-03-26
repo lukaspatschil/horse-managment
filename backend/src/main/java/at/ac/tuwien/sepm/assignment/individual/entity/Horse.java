@@ -2,7 +2,6 @@ package at.ac.tuwien.sepm.assignment.individual.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
@@ -14,20 +13,22 @@ public class Horse extends BaseEntity {
     private LocalDate birthday;
     private Long owner;
     private HorseRace race;
+    private byte[] image;
 
     public Horse() {
     }
 
-    public Horse(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
         this.birthday = birthday;
         this.owner = owner;
         this.race = race;
+        this.image = image;
     }
 
-    public Horse(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -35,6 +36,7 @@ public class Horse extends BaseEntity {
         this.birthday = birthday;
         this.owner = owner;
         this.race = race;
+        this.image = image;
     }
 
     public LocalDate getBirthday() {
@@ -83,6 +85,14 @@ public class Horse extends BaseEntity {
 
     public void setRace(HorseRace race) {
         this.race = race;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override
