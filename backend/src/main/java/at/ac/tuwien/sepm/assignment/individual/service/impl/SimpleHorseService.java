@@ -38,6 +38,12 @@ public class SimpleHorseService implements HorseService{
     }
 
     @Override
+    public List<Horse> getHorsefromOwner(Long id) {
+        LOGGER.trace("getHorsesformOwner({}}", id);
+        return horseDao.getHorsefromOwner(id);
+    }
+
+    @Override
     public Horse save(Horse horse) {
         LOGGER.trace("saveOwnerwithId({})", horse.getId());
 

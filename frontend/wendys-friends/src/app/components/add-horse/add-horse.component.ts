@@ -1,35 +1,35 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { OwnerService } from '../../service/owner.service';
+import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
+import { OwnerService } from "../../service/owner.service";
 
-import { Owner } from 'src/app/dto/owner';
+import { Owner } from "src/app/dto/owner";
 
 @Component({
-  selector: 'app-add-horse',
-  templateUrl: './add-horse.component.html',
-  styleUrls: ['./add-horse.component.scss']
+  selector: "app-add-horse",
+  templateUrl: "./add-horse.component.html",
+  styleUrls: ["./add-horse.component.scss"]
 })
 export class AddHorseComponent implements OnInit {
   @Input() owners: Owner[];
   @Output() addHorse: EventEmitter<any> = new EventEmitter();
 
-  name:string;
-  notes:string;
-  rating:number;
-  birthday:string;
-  owner:number;
-  race:string;
-  image:string;
-  type:string;
-  imageFile:File;
-  imageEncode:string;
-  fileList:FileList;
+  name: string;
+  notes: string;
+  rating: number;
+  birthday: string;
+  owner: number;
+  race: string;
+  image: string;
+  type: string;
+  imageFile: File;
+  imageEncode: string;
+  fileList: FileList;
 
-  constructor(private ownerService:OwnerService) { }
+  constructor(private ownerService: OwnerService) {}
 
   ngOnInit(): void {
     this.rating = 0;
     this.owner = 0;
-    this.race= "0";
+    this.race = "0";
   }
 
   onSubmit() {
@@ -45,7 +45,7 @@ export class AddHorseComponent implements OnInit {
       race: this.race,
       image: this.imageEncode,
       type: this.type
-    }
+    };
 
     console.log(horse);
 
@@ -59,7 +59,7 @@ export class AddHorseComponent implements OnInit {
       this.imageFile = file;
       this.handleInputChange(file); // turn into base64
     } else {
-      alert('No file selected');
+      alert("No file selected");
     }
   }
 
@@ -75,7 +75,7 @@ export class AddHorseComponent implements OnInit {
     const base64result = reader.result.substr(reader.result);
 
     this.image = base64result;
-    this.type = base64result.substr(0, base64result.indexOf(',') + 1);
-    this.imageEncode = base64result.substr(base64result.indexOf(',') + 1);
+    this.type = base64result.substr(0, base64result.indexOf(",") + 1);
+    this.imageEncode = base64result.substr(base64result.indexOf(",") + 1);
   }
 }

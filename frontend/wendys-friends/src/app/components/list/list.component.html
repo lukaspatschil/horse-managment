@@ -1,0 +1,20 @@
+<div>
+    <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error! </strong> {{ errorMessage }}
+        <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success! </strong> The horse
+        <span class="font-weight-bold">{{horse.name}}</span> with the id
+        <span class="font-weight-bold">{{horse.id}}</span> was added
+        <button type="button" (click)="vanishSuccess()" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <app-owner-item *ngFor="let owner of owners" [owner]="owner" (deleteOwner)="deleteOwner($event)" (updateOwner)="updateOwner($event)">
+    </app-owner-item>
+    <app-horse-item *ngFor="let horse of horses" [owners]="owners" [horse]="horse" (deleteHorse)="deleteHorse($event)" (updateHorse)="updateHorse($event)">
+    </app-horse-item>
+</div>

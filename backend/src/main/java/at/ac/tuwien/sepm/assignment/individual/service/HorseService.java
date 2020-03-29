@@ -21,6 +21,13 @@ public interface HorseService {
     List<Horse> getAllHorse();
 
     /**
+     *
+     * @param id
+     * @return
+     */
+    List<Horse> getHorsefromOwner(Long id);
+
+    /**
      * @param horse horse to save.
      * @return the horse saved in the db.
      * @throws RuntimeException  will be thrown if something goes wrong during data processing.

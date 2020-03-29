@@ -52,6 +52,16 @@ public class HorseEndpoint {
         }
     }
 
+    @GetMapping("/owners/{id}")
+    public List<HorseDto> getHorseformOwner(@PathVariable("id") Long id) {
+        LOGGER.info("GET horses from owner" +  BASE_URL + "/{}", id);
+        try {
+            return horseMapper.entitysToDto(horseService.getHorsefromOwner(id));
+        } catch (NotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse");
+        }
+    }
+
     @GetMapping("/search")
     public List<HorseDto> searchHorse(@RequestParam("params") HorseDto params) {
         LOGGER.info("GET (search) " + BASE_URL + "/{}", params);

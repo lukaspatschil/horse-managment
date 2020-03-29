@@ -1,11 +1,11 @@
 <div>
     <button class="owner" (click)="onShow()">
-        <label class="marigingo" for="{{ owner.id }}">
-            <p class="marigingo widthlimiter">Horse Owner: <span class="font-weight-bold">{{owner.name}}</span></p>
-        </label>
-        <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <label class="marigingo" for="{{ owner.id }}">
+      <p class="marigingo widthlimiter">Horse Owner: <span class="font-weight-bold">{{owner.name}}</span></p>
+    </label>
+    <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
     </button>
     <div *ngIf="show">
         <form class="form" (ngSubmit)="onUpdate()">
@@ -15,4 +15,6 @@
             </ul>
         </form>
     </div>
+    <app-horse-item *ngFor="let horse of horses" [owners]="owners" [horse]="horse" (deleteHorse)="deleteHorse($event)" (updateHorse)="updateHorse($event)">
+    </app-horse-item>
 </div>

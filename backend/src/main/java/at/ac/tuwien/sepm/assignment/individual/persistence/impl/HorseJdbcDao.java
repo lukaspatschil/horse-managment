@@ -33,7 +33,7 @@ public class HorseJdbcDao implements HorseDao {
 
     @Override
     public Horse findOneById(Long id) {
-        LOGGER.trace("Get owner with id {}", id);
+        LOGGER.trace("Get horse with id {}", id);
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
 
@@ -47,6 +47,15 @@ public class HorseJdbcDao implements HorseDao {
         LOGGER.trace("Get all the horses from the database");
         final String sql = "SELECT * FROM " + TABLE_NAME;
         List<Horse> horses = jdbcTemplate.query(sql, this::mapRow);
+
+        return horses;
+    }
+
+    @Override
+    public List<Horse> getHorsefromOwner(Long id) {
+        LOGGER.trace("Get horses from owner with if {}", id);
+        final String sql = "SELECT * FROM " +TABLE_NAME + " WHERE owner=?";
+        List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
 
         return horses;
     }

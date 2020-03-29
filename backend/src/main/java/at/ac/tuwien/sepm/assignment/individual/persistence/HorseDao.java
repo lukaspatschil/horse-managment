@@ -24,6 +24,13 @@ public interface HorseDao {
 
     /**
      *
+     * @param id
+     * @return
+     */
+    List<Horse> getHorsefromOwner(Long id);
+
+    /**
+     *
      * @param horse the horse to save in the db
      * @return the horse which was saved
      * @throws //add here

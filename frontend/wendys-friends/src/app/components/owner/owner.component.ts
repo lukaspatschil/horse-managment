@@ -1,30 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import {OwnerService} from '../../service/owner.service';
-import {Owner} from '../../dto/owner';
+import { Component, OnInit } from "@angular/core";
+import { OwnerService } from "../../service/owner.service";
+import { Owner } from "../../dto/owner";
 
 @Component({
-  selector: 'app-owner',
-  templateUrl: './owner.component.html',
-  styleUrls: ['./owner.component.scss']
+  selector: "app-owner",
+  templateUrl: "./owner.component.html",
+  styleUrls: ["./owner.component.scss"]
 })
 export class OwnerComponent implements OnInit {
-
   success = false;
   error = false;
-  errorMessage = '';
-  owner:Owner;
-  owners:Owner[];
+  errorMessage = "";
+  owner: Owner;
+  owners: Owner[];
 
-  constructor(private ownerService: OwnerService) {
-  }
+  constructor(private ownerService: OwnerService) {}
 
-  ngOnInit():void {
-    this.ownerService.getOwner().subscribe(owners => {
-      this.owners = owners;
-    },
-    error => {
-      this.defaultServiceErrorHandling(error);
-    });
+  ngOnInit(): void {
+    this.ownerService.getOwner().subscribe(
+      owners => {
+        this.owners = owners;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
   /**
@@ -35,8 +35,8 @@ export class OwnerComponent implements OnInit {
   }
 
   /**
-  * Success flag will be deactivated, which clears the success message
-  */
+   * Success flag will be deactivated, which clears the success message
+   */
   vanishSuccess() {
     this.success = false;
   }
@@ -45,7 +45,7 @@ export class OwnerComponent implements OnInit {
    * Loads the owner for the specified id
    * @param id the id of the owner
    */
-   private loadOwner(id: number) {
+  private loadOwner(id: number) {
     this.ownerService.getOwnerById(id).subscribe(
       (owner: Owner) => {
         this.owner = owner;
@@ -61,40 +61,49 @@ export class OwnerComponent implements OnInit {
    * @param name the name of the new owner
    */
   public addOwner(owner: Owner) {
-    this.ownerService.addOwner(owner).subscribe(owner => {
-      this.owners.push(owner);
-      this.owner = owner;
-      this.success = true;
-    },
-    error => {
-      this.defaultServiceErrorHandling(error);
-    });
+    this.ownerService.addOwner(owner).subscribe(
+      owner => {
+        this.owners.push(owner);
+        this.owner = owner;
+        this.success = true;
+      },
+      error => {
+        this.defaultServiceErrorHandling(error);
+      }
+    );
   }
 
   /**
-   * 
-   * @param error 
+   *
+   * @param error
    */
-  public deleteOwner(owner: Owner) {// Remove From UI
+  public deleteOwner(owner: Owner) {
+    // Remove From UI
     this.owners = this.owners.filter(h => h.id !== owner.id);
     // Remove from server
-    this.ownerService.deleteOwner(owner).subscribe(owner => {},
+    this.ownerService.deleteOwner(owner).subscribe(
+      owner => {},
       error => {
         this.defaultServiceErrorHandling(error);
-        this.ownerService.getOwner().subscribe(owners => {
-          this.owners = owners;
-        },
-        error => {
-          this.defaultServiceErrorHandling(error);
-        });
-    });
+        this.ownerService.getOwner().subscribe(
+          owners => {
+            this.owners = owners;
+          },
+          error => {
+            this.defaultServiceErrorHandling(error);
+          }
+        );
+      }
+    );
   }
 
   public updateOwner(owner: Owner) {
-    this.ownerService.updateOwner(owner).subscribe(owner =>{},
+    this.ownerService.updateOwner(owner).subscribe(
+      owner => {},
       error => {
         this.defaultServiceErrorHandling(error);
-      });
+      }
+    );
   }
 
   private defaultServiceErrorHandling(error: any) {
@@ -102,14 +111,14 @@ export class OwnerComponent implements OnInit {
     this.error = true;
     if (error.status === 0) {
       // If status is 0, the backend is probably down
-      this.errorMessage = 'The backend can not to be reached';
+      this.errorMessage = "The backend can not to be reached";
     } else if (error.status === 400) {
       // If status is 400, the input was wrong
-      this.errorMessage = 'The input was wrong!';
+      this.errorMessage = "The input was wrong!";
     } else if (error.status === 500) {
       // If status is 500, there was a server error
-      this.errorMessage = 'There was an unexpected server error';
-    } else if (error.error.message === 'No message available') {
+      this.errorMessage = "There was an unexpected server error";
+    } else if (error.error.message === "No message available") {
       // If no detailed error message is provided, fall back to the simple error name
       this.errorMessage = error.error.error;
     } else {
