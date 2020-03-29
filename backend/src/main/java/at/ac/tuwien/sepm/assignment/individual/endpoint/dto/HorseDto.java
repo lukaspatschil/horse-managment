@@ -13,11 +13,12 @@ public class HorseDto extends BaseDto {
     private HorseRace race;
     private Long owner;
     private String image;
+    String type;
 
     public HorseDto() {
     }
 
-    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, String image, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, String image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
@@ -25,9 +26,10 @@ public class HorseDto extends BaseDto {
         this.race = race;
         this.owner = owner;
         this.image = image;
+        this.type = type;
     }
 
-    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, String image, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, String image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -36,6 +38,7 @@ public class HorseDto extends BaseDto {
         this.race = race;
         this.owner = owner;
         this.image = image;
+        this.type = type;
     }
 
     public LocalDate getBirthday() {
@@ -94,6 +97,14 @@ public class HorseDto extends BaseDto {
         this.image = image;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,12 +116,14 @@ public class HorseDto extends BaseDto {
             Objects.equals(notes, horseDto.notes) &&
             birthday.equals(horseDto.birthday) &&
             race == horseDto.race &&
-            owner.equals(horseDto.owner);
+            owner.equals(horseDto.owner) &&
+            image.equals(horseDto.image) &&
+            type.equals(horseDto.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, notes, rating, birthday, race, owner);
+        return Objects.hash(super.hashCode(), name, notes, rating, birthday, race, owner, image, type);
     }
 
     @Override

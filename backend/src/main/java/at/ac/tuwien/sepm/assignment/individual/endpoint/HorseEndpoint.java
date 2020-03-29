@@ -67,7 +67,6 @@ public class HorseEndpoint {
     public HorseDto post(@RequestBody HorseDto horse) {
         LOGGER.info("POST " + BASE_URL + "/{}", horse.getName());
         try {
-            LOGGER.error("test");
             return horseMapper.entityToDto(horseService.save(horseMapper.dtoToEntity(horse)));
         } catch (ValidationException e) {
             throw new

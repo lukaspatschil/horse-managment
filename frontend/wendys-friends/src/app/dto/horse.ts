@@ -7,6 +7,7 @@ export class Horse {
       public birthday: string,
       public owner: number,
       public race: string,
-      public image: string) {
+      public image: string,
+      public type:string) {
     }
   }

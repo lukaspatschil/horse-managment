@@ -33,7 +33,7 @@
                 </select>
             </li>
             <li class="li"><span class="span">Image: </span>
-                <input type="file" name="image" [(ngModel)]="fileList" accept=".png,.jpg,.jpeg">
+                <input type="file" name="image" [(ngModel)]="fileList" (change)="picked($event)" accept=".png,.jpg,.jpeg">
             </li>
             <li class="li"><input type="submit" value="Submit" class="btn"></li>
         </ul>

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { HorseService } from '../../service/horse.service';
 
 import { Horse } from 'src/app/dto/horse';
@@ -22,17 +23,18 @@ export class ListHorseComponent implements OnInit {
   birthday:string;
   owner:number;
   race:string;
+  image:SafeStyle;
 
-  constructor(private horseService:HorseService) { }
+  constructor(private horseService:HorseService, private sanitization:DomSanitizer) { }
 
   ngOnInit(): void {
-    console.log(this.horse.image);
     this.name = this.horse.name;
     this.notes = this.horse.notes;
     this.rating = this.horse.rating;
     this.birthday = this.horse.birthday;
     this.race = this.horse.race;
     this.owner = this.horse.owner;
+    this.image = this.sanitization.bypassSecurityTrustStyle(this.horse.type + this.horse.image);
   }
 
   onDelete(horse) {

@@ -18,7 +18,9 @@ export class AddHorseComponent implements OnInit {
   birthday:string;
   owner:number;
   race:string;
-  image:File;
+  image:string;
+  type:string;
+  imageFile:File;
   imageEncode:string;
   fileList:FileList;
 
@@ -41,7 +43,8 @@ export class AddHorseComponent implements OnInit {
       birthday: this.birthday,
       owner: this.owner,
       race: this.race,
-      image: this.imageEncode
+      image: this.imageEncode,
+      type: this.type
     }
 
     console.log(horse);
@@ -53,7 +56,7 @@ export class AddHorseComponent implements OnInit {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-      this.image = file;
+      this.imageFile = file;
       this.handleInputChange(file); // turn into base64
     } else {
       alert('No file selected');
@@ -71,8 +74,8 @@ export class AddHorseComponent implements OnInit {
     const reader = e.target;
     const base64result = reader.result.substr(reader.result);
 
-    this.imageEncode = base64result;
-
-    console.log(this.imageEncode);
+    this.image = base64result;
+    this.type = base64result.substr(0, base64result.indexOf(',') + 1);
+    this.imageEncode = base64result.substr(base64result.indexOf(',') + 1);
   }
 }

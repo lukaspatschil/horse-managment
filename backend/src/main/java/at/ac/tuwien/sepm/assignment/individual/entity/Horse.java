@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Objects;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
@@ -14,11 +15,12 @@ public class Horse extends BaseEntity {
     private Long owner;
     private HorseRace race;
     private byte[] image;
+    private String type;
 
     public Horse() {
     }
 
-    public Horse(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
@@ -26,9 +28,10 @@ public class Horse extends BaseEntity {
         this.owner = owner;
         this.race = race;
         this.image = image;
+        this.type = type;
     }
 
-    public Horse(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -37,6 +40,7 @@ public class Horse extends BaseEntity {
         this.owner = owner;
         this.race = race;
         this.image = image;
+        this.type = type;
     }
 
     public LocalDate getBirthday() {
@@ -95,6 +99,14 @@ public class Horse extends BaseEntity {
         this.image = image;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,17 +114,23 @@ public class Horse extends BaseEntity {
         if (!super.equals(o)) return false;
         Horse horse = (Horse) o;
         return rating == horse.rating &&
-            owner == horse.owner &&
             name.equals(horse.name) &&
             Objects.equals(notes, horse.notes) &&
             birthday.equals(horse.birthday) &&
-            race == horse.race;
+            owner.equals(horse.owner) &&
+            race == horse.race &&
+            Arrays.equals(image, horse.image) &&
+            type.equals(horse.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, notes, rating, birthday, owner, race);
+        int result = Objects.hash(super.hashCode(), name, notes, rating, birthday, owner, race, type);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
+
+
 
     @Override
     protected String fieldsString() {
