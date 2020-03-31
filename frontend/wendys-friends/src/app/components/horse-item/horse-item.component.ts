@@ -36,6 +36,8 @@ export class ListHorseComponent implements OnInit {
     const horse = new Horse(this.horse.id, this.horse.name, this.horse.notes, this.horse.rating, this.horse.birthday, this.horse.owner, this.horse.race, this.horse.image, this.horse.type, null, null);
     console.log(this.horse);
     this.updateHorse.emit(horse);
+
+    window.location.reload();
   }
 
   picked(event: any) {

@@ -13,7 +13,7 @@ export class OwnerSearchComponent implements OnInit {
   success = false;
   error = false;
   errorMessage = "";
-  name:string;
+  name = "";
   owners: Owner[];
 
   constructor(private ownerService: OwnerService) { }

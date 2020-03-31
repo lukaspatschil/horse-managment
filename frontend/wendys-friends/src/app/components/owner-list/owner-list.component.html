@@ -1,6 +1,6 @@
-<div>
+<div class="background_green">
     <h2 class="h4 distance">
-        Horses of <span class="green">{{ owner.name }}</span> (created at: {{ owner.createdAt }}, updated at: {{ owner.updatedAt }}):
+        Horses of <span class="green">{{ owner.name }}</span>:
     </h2>
     <div class="wrapper">
         <app-horse-list *ngFor="let horse of horses" [horse]="horse"></app-horse-list>

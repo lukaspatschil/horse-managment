@@ -14,8 +14,6 @@ export class ListOwnerComponent implements OnInit {
   @Output() updateOwner: EventEmitter<Owner> = new EventEmitter();
 
   show: boolean;
-  error= false;
-  errorMessage = "";
 
   constructor(
     private ownerService: OwnerService
@@ -42,5 +40,7 @@ export class ListOwnerComponent implements OnInit {
     }
     console.log(owner);
     this.updateOwner.emit(owner);
+
+    window.location.reload();
   }
 }

@@ -18,6 +18,10 @@ export class HorseService {
 
   constructor(private httpClient: HttpClient, private globals: Globals) {}
 
+  getHorseById(id:number): Observable<Horse> {
+    return this.httpClient.get<Horse>(this.messageBaseUri + "/" + id);
+  }
+
   /**
    * Loads all the current horses form the backend
    */
