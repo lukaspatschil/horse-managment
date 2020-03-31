@@ -69,6 +69,7 @@ public class SimpleOwnerService implements OwnerService {
         LOGGER.trace("searchOwner({})", param);
 
         //TODO validation?
+        param.setName("%" + param.getName() + "%");
 
         return ownerDao.searchOwner(param);
     }

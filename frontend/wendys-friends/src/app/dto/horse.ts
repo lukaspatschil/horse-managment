@@ -8,6 +8,8 @@ export class Horse {
       public owner: number,
       public race: string,
       public image: string,
-      public type:string) {
+      public type:string,
+      public createdAt:string,
+      public updatedAt:string) {
     }
   }

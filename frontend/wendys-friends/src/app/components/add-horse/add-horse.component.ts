@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
 import { OwnerService } from "../../service/owner.service";
 
 import { Owner } from "src/app/dto/owner";
+import { Horse } from 'src/app/dto/horse';
 
 @Component({
   selector: "app-add-horse",
@@ -36,16 +37,7 @@ export class AddHorseComponent implements OnInit {
     if (this.notes == null) {
       this.notes = "";
     }
-    const horse = {
-      name: this.name,
-      notes: this.notes,
-      rating: this.rating,
-      birthday: this.birthday,
-      owner: this.owner,
-      race: this.race,
-      image: this.imageEncode,
-      type: this.type
-    };
+    const horse = new Horse(0, this.name, this.notes, this.rating, this.birthday, this.owner, this.race, this.imageEncode, this.type, null, null);
 
     console.log(horse);
 

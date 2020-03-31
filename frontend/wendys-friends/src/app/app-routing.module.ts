@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { OwnerComponent } from "./components/owner/owner.component";
 import { HorseComponent } from "./components/horse/horse.component";
 import { ListComponent } from "./components/list/list.component";
+import { OwnerSearchComponent } from './components/owner-search/owner-search.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "owner", pathMatch: "full" },

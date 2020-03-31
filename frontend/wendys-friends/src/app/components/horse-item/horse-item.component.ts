@@ -16,29 +16,12 @@ export class ListHorseComponent implements OnInit {
   @Output() updateHorse: EventEmitter<Horse> = new EventEmitter();
 
   show:boolean;
-  name:string;
-  notes:string;
-  rating:number;
-  birthday:string;
-  owner:number;
-  race:string;
-  image: string;
-  type: string;
   imageFile: File;
-  imageEncode: string;
   fileList: FileList;
 
   constructor(private horseService:HorseService) { }
 
   ngOnInit(): void {
-    this.name = this.horse.name;
-    this.notes = this.horse.notes;
-    this.rating = this.horse.rating;
-    this.birthday = this.horse.birthday;
-    this.race = this.horse.race;
-    this.owner = this.horse.owner;
-    this.type = this.horse.type;
-    this.imageEncode = this.horse.image;
   }
 
   onDelete(horse) {
@@ -50,16 +33,9 @@ export class ListHorseComponent implements OnInit {
   }
 
   onUpdate() {
-    this.horse.name = this.name;
-    this.horse.notes = this.notes;
-    this.horse.rating = this.rating;
-    this.horse.birthday = this.birthday;
-    this.horse.race = this.race;
-    this.horse.owner = this.owner;
-    this.horse.image = this.imageEncode;
-    this.horse.type = this.type;
+    const horse = new Horse(this.horse.id, this.horse.name, this.horse.notes, this.horse.rating, this.horse.birthday, this.horse.owner, this.horse.race, this.horse.image, this.horse.type, null, null);
     console.log(this.horse);
-    this.updateHorse.emit(this.horse);
+    this.updateHorse.emit(horse);
   }
 
   picked(event: any) {
@@ -84,8 +60,7 @@ export class ListHorseComponent implements OnInit {
     const reader = e.target;
     const base64result = reader.result.substr(reader.result);
 
-    this.image = base64result;
-    this.type = base64result.substr(0, base64result.indexOf(",") + 1);
-    this.imageEncode = base64result.substr(base64result.indexOf(",") + 1);
+    this.horse.type = base64result.substr(0, base64result.indexOf(",") + 1);
+    this.horse.image = base64result.substr(base64result.indexOf(",") + 1);
   }
 }

@@ -2,19 +2,10 @@
     margin: 2em 0em;
 }
 
-.form input[type='text'] {
+.input {
     flex: 2;
     padding: 5px;
-}
-
-.form input[type='date'] {
-    flex: 2;
-    padding: 5px;
-}
-
-.form select {
-    flex: 2;
-    padding: 5px;
+    background-color: white;
 }
 
 .form input[type='submit'] {

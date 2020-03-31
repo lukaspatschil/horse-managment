@@ -10,7 +10,9 @@
     <div *ngIf="show">
         <form class="form" (ngSubmit)="onUpdate()">
             <ul>
-                <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name"></li>
+                <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="owner.name"></li>
+                <li class="li"><span class="span">Created: </span><input type="text" name="createdAt" [(ngModel)]="owner.createdAt"></li>
+                <li class="li"><span class="span">Updated: </span><input type="text" name="updatedAt" [(ngModel)]="owner.updatedAt"></li>
                 <li class="li"><input type="submit" value="Update" class="btn btn-primary"></li>
             </ul>
         </form>

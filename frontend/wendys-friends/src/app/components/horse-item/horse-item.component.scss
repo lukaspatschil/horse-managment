@@ -34,19 +34,10 @@
     margin: 0em;
 }
 
-.form input[type='text'] {
+.input {
     flex: 2;
     padding: 5px;
-}
-
-.form input[type='date'] {
-    flex: 2;
-    padding: 5px;
-}
-
-.form select {
-    flex: 2;
-    padding: 5px;
+    background-color: white;
 }
 
 .form input[type='submit'] {
@@ -55,7 +46,7 @@
 
 .ul {
     width: 100%;
-    margin: 0.5em;
+    margin: 0.6em;
     padding: 0;
     list-style-type: none;
 }
@@ -75,11 +66,28 @@
 }
 
 .image {
-    max-height: 300px;
-    max-width: 400px;
+    max-height: 350px;
+    max-width: 350px;
     margin: 0.5em;
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.5);
+    transition: ease 0.5s transform;
+}
+
+.image:hover {
+    transform: scale(1.1);
 }
 
 .wrapper {
     display: flex;
+}
+
+@media only screen and (max-width: 700px) {
+    .image {
+        max-width: 200px;
+        max-height: 200px;
+        align-self: center;
+    }
+    .wrapper {
+        flex-direction: column;
+    }
 }

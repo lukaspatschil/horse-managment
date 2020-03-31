@@ -114,7 +114,7 @@ public class OwnerJdbcDao implements OwnerDao {
     public List<Owner> searchOwner(Owner param) {
         LOGGER.trace("Search owners with params {}", param);
 
-        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE ?";
+        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE UPPER(name) LIKE UPPER(?)";
 
         List<Owner> owners = jdbcTemplate.query(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

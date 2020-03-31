@@ -1,6 +1,6 @@
 .form {
     display: flex;
-    margin: 2em 0.5em;
+    margin: 2.1em 0.5em;
 }
 
 .form input[type='text'] {
@@ -10,4 +10,8 @@
 
 .form input[type='submit'] {
     flex: 2;
+}
+
+.wrapper {
+    max-width: 500px;
 }

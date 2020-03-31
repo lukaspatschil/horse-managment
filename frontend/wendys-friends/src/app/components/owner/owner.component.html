@@ -1,5 +1,8 @@
 <div class="wrapper">
     <app-add-owner (addOwner)="addOwner($event)"></app-add-owner>
+
+    <app-owner-search (searchOwner)="searchOwner($event)"></app-owner-search>
+
     <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Error! </strong> {{ errorMessage }}
         <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">
@@ -13,6 +16,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     <app-owner-item *ngFor="let owner of owners" [owner]="owner" (deleteOwner)="deleteOwner($event)" (updateOwner)="updateOwner($event)">
     </app-owner-item>
 </div>

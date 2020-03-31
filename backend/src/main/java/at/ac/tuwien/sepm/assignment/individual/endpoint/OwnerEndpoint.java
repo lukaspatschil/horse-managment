@@ -89,8 +89,7 @@ public class OwnerEndpoint {
     public OwnerDto updateOne(@RequestBody OwnerDto newOwner, @PathVariable Long id) {
         LOGGER.info("PUT " + BASE_URL + "/{}", id);
         try {
-            Owner newOwnerEntity = ownerMapper.dtoToEntity(newOwner);
-            return ownerMapper.entityToDto(ownerService.update(id, newOwnerEntity));
+            return ownerMapper.entityToDto(ownerService.update(id, ownerMapper.dtoToEntity(newOwner)));
         } catch (NotFoundException e) {
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         }

@@ -74,6 +74,15 @@ export class OwnerComponent implements OnInit {
     );
   }
 
+  public searchOwner(owner: Owner) {
+    this.ownerService.searchOwner(owner).subscribe(owners => {
+      this.owners = owners;
+    },
+    error => {
+      this.defaultServiceErrorHandling(error);
+    });
+  }
+
   /**
    *
    * @param error

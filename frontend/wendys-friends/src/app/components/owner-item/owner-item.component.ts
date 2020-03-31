@@ -14,7 +14,6 @@ export class ListOwnerComponent implements OnInit {
   @Output() updateOwner: EventEmitter<Owner> = new EventEmitter();
 
   show: boolean;
-  name: string;
   error= false;
   errorMessage = "";
 
@@ -24,7 +23,6 @@ export class ListOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     this.show = false;
-    this.name = this.owner.name;
   }
 
   onDelete(owner) {
@@ -36,8 +34,13 @@ export class ListOwnerComponent implements OnInit {
   }
 
   onUpdate() {
-    this.owner.name = this.name;
-    console.log(this.owner);
-    this.updateOwner.emit(this.owner);
+    const owner = {
+      id: this.owner.id,
+      name: this.owner.name,
+      createdAt: null,
+      updatedAt: null
+    }
+    console.log(owner);
+    this.updateOwner.emit(owner);
   }
 }

@@ -15,6 +15,7 @@ import { ListHorseComponent } from "./components/horse-item/horse-item.component
 import { ListComponent } from './components/list/list.component';
 import { OwnerListComponent } from './components/owner-list/owner-list.component';
 import { HorseListComponent } from './components/horse-list/horse-list.component';
+import { OwnerSearchComponent } from './components/owner-search/owner-search.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HorseListComponent } from './components/horse-list/horse-list.component
     ListHorseComponent,
     ListComponent,
     OwnerListComponent,
-    HorseListComponent
+    HorseListComponent,
+    OwnerSearchComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

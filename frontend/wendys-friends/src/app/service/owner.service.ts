@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Globals} from '../global/globals';
 import {Observable} from 'rxjs';
 import {Owner} from '../dto/owner';
@@ -60,4 +60,12 @@ export class OwnerService {
     return this.httpClient.put<Owner>(this.messageBaseUri + '/' + owner.id, owner, httpOptions);
   }
 
+  searchOwner(owner:Owner):Observable<Owner[]> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+
+    let params = new HttpParams().set("params", owner.name);
+
+    return this.httpClient.get<Owner[]>(this.messageBaseUri + '/search', {headers: headers, params: params});
+  }
 }
