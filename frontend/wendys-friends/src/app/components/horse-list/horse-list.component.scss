@@ -1,0 +1,30 @@
+.figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    margin: 0;
+}
+
+.fig_img {
+    max-width: 300px;
+    max-height: 300px;
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1em;
+    transition: ease 0.5s transform;
+}
+
+.fig_img:hover {
+    transform: scale(1.1);
+}
+
+.fig_label {
+    font-size: 1rem;
+    color: var(--primary-color);
+    text-align: left;
+    background-color: white;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    padding: 0.5em;
+    margin: 0 auto;
+}

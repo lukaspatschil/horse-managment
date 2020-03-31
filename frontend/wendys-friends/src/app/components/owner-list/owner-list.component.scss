@@ -1,0 +1,11 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-gap: 50px;
+    justify-content: center;
+    align-content: center;
+}
+
+.distance {
+    margin: 2rem;
+}

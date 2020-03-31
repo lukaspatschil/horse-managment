@@ -1,24 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { OwnerService } from "../../service/owner.service";
-import { Owner } from "../../dto/owner";
+import { Component, OnInit, Input } from '@angular/core';
+
+import { Owner } from 'src/app/dto/owner';
+import { HorseService } from 'src/app/service/horse.service';
+import { Horse } from 'src/app/dto/horse';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-owner-list',
+  templateUrl: './owner-list.component.html',
+  styleUrls: ['./owner-list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class OwnerListComponent implements OnInit {
+  @Input() owner: Owner;
 
-  owners: Owner[];
   error = false;
   errorMessage = "";
+  horses: Horse[];
 
-  constructor(private ownerService: OwnerService) { }
+  constructor(private horseService: HorseService) { }
 
   ngOnInit(): void {
-    this.ownerService.getOwner().subscribe(
-      owners => {
-        this.owners = owners;
+    this.horseService.getHorsesfromOwner(this.owner.id).subscribe(
+      horses => {
+        this.horses = horses;
       },
       error => {
         this.defaultServiceErrorHandling(error);
@@ -34,7 +37,7 @@ export class ListComponent implements OnInit {
       this.errorMessage = "The backend can not to be reached";
     } else if (error.status === 400) {
       // If status is 400, the input was wrong
-      this.errorMessage = "The input was wrong!";
+      this.errorMessage = "The input was wrong";
     } else if (error.status === 500) {
       // If status is 500, there was a server error
       this.errorMessage = "There was an unexpected server error";

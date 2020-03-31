@@ -1,4 +1,4 @@
-<div>
+<div class="wrapper">
     <app-add-horse [owners]="owners" (addHorse)="addHorse($event)"></app-add-horse>
     <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Error! </strong> {{ errorMessage }}
@@ -6,6 +6,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+
     <div *ngIf="success" class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>Success! </strong> The horse
         <span class="font-weight-bold">{{horse.name}}</span> with the id
@@ -14,6 +15,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     <app-horse-item *ngFor="let horse of horses" [owners]="owners" [horse]="horse" (deleteHorse)="deleteHorse($event)" (updateHorse)="updateHorse($event)">
     </app-horse-item>
 </div>

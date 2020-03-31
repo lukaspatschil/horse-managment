@@ -13,8 +13,8 @@ import { AddHorseComponent } from "./components/add-horse/add-horse.component";
 import { ListOwnerComponent } from "./components/owner-item/owner-item.component";
 import { ListHorseComponent } from "./components/horse-item/horse-item.component";
 import { ListComponent } from './components/list/list.component';
-import { HorseItemListComponent } from './components/horse-item-list/horse-item-list.component';
-import { OwnerItemListComponent } from './components/owner-item-list/owner-item-list.component';
+import { OwnerListComponent } from './components/owner-list/owner-list.component';
+import { HorseListComponent } from './components/horse-list/horse-list.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import { OwnerItemListComponent } from './components/owner-item-list/owner-item-
     ListOwnerComponent,
     ListHorseComponent,
     ListComponent,
-    HorseItemListComponent,
-    OwnerItemListComponent
+    OwnerListComponent,
+    HorseListComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],

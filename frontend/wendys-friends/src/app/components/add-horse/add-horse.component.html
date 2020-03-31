@@ -1,6 +1,6 @@
 <form class="form" (ngSubmit)="onSubmit()">
     <div>
-        <h1 class="h1">Add a new Horse:</h1>
+        <h1 class="h3">Add a new Horse:</h1>
     </div>
     <div>
         <ul class="ul">
@@ -33,9 +33,9 @@
                 </select>
             </li>
             <li class="li"><span class="span">Image: </span>
-                <input type="file" name="image" [(ngModel)]="fileList" (change)="picked($event)" accept=".png,.jpg,.jpeg">
+                <input type="file" name="fileList" [(ngModel)]="fileList" (change)="picked($event)" accept=".png,.jpg,.jpeg">
             </li>
-            <li class="li"><input type="submit" value="Submit" class="btn"></li>
+            <li class="li"><input type="submit" value="Submit" class="btn btn-primary"></li>
         </ul>
     </div>
 </form>
