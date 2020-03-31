@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Globals } from "../global/globals";
 import { Observable } from "rxjs";
 import { Horse } from "../dto/horse";
@@ -55,5 +55,14 @@ export class HorseService {
       horse,
       httpOptions
     );
+  }
+
+  searchHorse(horse:Horse):Observable<Horse[]> {
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+
+    let params = new HttpParams().set("params", horse.name).set("params", horse.notes).set("params", horse.birthday).set("params", horse.race).set("params", horse.rating.toString());
+
+    return this.httpClient.get<Horse[]>(this.messageBaseUri + '/search', {headers: headers, params: params});
   }
 }

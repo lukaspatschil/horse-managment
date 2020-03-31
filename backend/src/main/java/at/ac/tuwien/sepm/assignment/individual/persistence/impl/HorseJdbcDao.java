@@ -142,7 +142,23 @@ public class HorseJdbcDao implements HorseDao {
     public List<Horse> searchHorse(Horse param) {
         LOGGER.trace("Search horses with params {}", param);
 
-        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE LOWER(?) AND notes LIKE LOWER(?) AND race=? AND rating=? AND birthday <= ?";
+        String notes, race, rating, birthday;
+        notes = race = rating = birthday = "";
+
+        if (param.getNotes() != null) {
+            notes = " AND notes LIKE UPPER(?)";
+        }
+        if (param.getRace() != null) {
+            race = " AND race=?";
+        }
+        if (param.getRating() > 0 && param.getRating() < 6) {
+            rating = " AND rating=?";
+        }
+        if (param.getBirthday() != null) {
+            birthday= " AND birthday>=?";
+        }
+
+        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE LOWER(?)" + notes + race + rating + birthday;
 
         List<Horse> horses = jdbcTemplate.query(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

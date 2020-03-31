@@ -16,6 +16,7 @@ import { ListComponent } from './components/list/list.component';
 import { OwnerListComponent } from './components/owner-list/owner-list.component';
 import { HorseListComponent } from './components/horse-list/horse-list.component';
 import { OwnerSearchComponent } from './components/owner-search/owner-search.component';
+import { HorseSearchComponent } from './components/horse-search/horse-search.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { OwnerSearchComponent } from './components/owner-search/owner-search.com
     ListComponent,
     OwnerListComponent,
     HorseListComponent,
-    OwnerSearchComponent
+    OwnerSearchComponent,
+    HorseSearchComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
