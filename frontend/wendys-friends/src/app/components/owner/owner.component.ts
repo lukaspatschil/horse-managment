@@ -8,6 +8,7 @@ import { Owner } from "../../dto/owner";
   styleUrls: ["./owner.component.scss"]
 })
 export class OwnerComponent implements OnInit {
+  
   success = false;
   error = false;
   errorMessage = "";

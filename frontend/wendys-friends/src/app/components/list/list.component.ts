@@ -23,6 +23,14 @@ export class ListComponent implements OnInit {
     private horseService: HorseService
   ) {}
 
+  vanishError(): void {
+    this.error = false;
+  }
+
+  vanishSuccess(): void {
+    this.success= false;
+  }
+
   ngOnInit(): void {
     this.ownerService.getOwner().subscribe(
       owners => {
