@@ -31,6 +31,11 @@ export class ListOwnerComponent implements OnInit {
     this.deleteOwner.emit(owner);
   }
 
+  onEdit(owner) {
+    console.log(owner);
+    
+  }
+
   onShow() {
     this.show = !this.show;
   }

@@ -1,0 +1,16 @@
+<button class="owner" (click)="onShow()">
+    <label class="marigingo" for="{{ owner.id }}">
+      <p class="marigingo widthlimiter">Horse Owner: <span class="font-weight-bold">{{owner.name}}</span></p>
+    </label>
+    <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</button>
+<div *ngIf="show">
+    <form class="form" (ngSubmit)="onUpdate()">
+        <ul>
+            <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name"></li>
+            <li class="li"><input type="submit" value="Update" class="btn"></li>
+        </ul>
+    </form>
+</div>

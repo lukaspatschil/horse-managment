@@ -4,10 +4,45 @@
 }
 
 .form input[type='text'] {
-    flex: 10;
-    padding: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    border: none;
+    padding-left: 0.5em;
+    margin: 0;
+    font-family: inherit;
+    font-size: 1em;
+    height: 2.5rem;
+    width: 100%;
+}
+
+input[type='text']:focus {
+    outline: none;
 }
 
 .form input[type='submit'] {
     flex: 2;
+}
+
+.button.strech {
+    width: 100%;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+
+.add {
+    flex-grow: 2;
+}
+
+.bar {
+    font-size: 1rem;
+    display: flex;
+    max-width: 500px;
+    margin: 3em auto;
 }

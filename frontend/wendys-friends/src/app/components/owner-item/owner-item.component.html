@@ -1,18 +1,11 @@
-<div>
-    <button class="owner" (click)="onShow()">
-    <label class="marigingo" for="{{ owner.id }}">
-      <p class="marigingo widthlimiter">Horse Owner: <span class="font-weight-bold">{{owner.name}}</span></p>
-    </label>
-    <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
+<figure class="figure">
+    <button class="button" (click)="onEdit(owner)">
+      <img class="fig_img" id="{{ owner.id }}" src="assets/placeholder_user.png" alt="User image">
     </button>
-    </button>
-    <div *ngIf="show">
-        <form class="form" (ngSubmit)="onUpdate()">
-            <ul>
-                <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="name"></li>
-                <li class="li"><input type="submit" value="Update" class="btn"></li>
-            </ul>
-        </form>
-    </div>
-</div>
+    <figcaption class="fig_label">
+        <strong>{{ owner.name }}</strong>
+        <button (click)="onDelete(owner) " type="button " class="btn btn-danger " aria-label="Close ">
+          <span aria-hidden="true ">&times;</span>
+        </button>
+    </figcaption>
+</figure>

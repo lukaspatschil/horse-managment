@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HorseItemListComponent } from './horse-item-list.component';
+import { OwnerEditComponent } from './owner-edit.component';
 
-describe('HorseItemListComponent', () => {
-  let component: HorseItemListComponent;
-  let fixture: ComponentFixture<HorseItemListComponent>;
+describe('OwnerEditComponent', () => {
+  let component: OwnerEditComponent;
+  let fixture: ComponentFixture<OwnerEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorseItemListComponent ]
+      declarations: [ OwnerEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HorseItemListComponent);
+    fixture = TestBed.createComponent(OwnerEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
