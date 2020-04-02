@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
-import { HorseService } from '../../service/horse.service';
 
 import { Horse } from 'src/app/dto/horse';
 import { Owner } from 'src/app/dto/owner';
@@ -19,7 +18,7 @@ export class ListHorseComponent implements OnInit {
   imageFile: File;
   fileList: FileList;
 
-  constructor(private horseService:HorseService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

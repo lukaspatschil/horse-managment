@@ -1,6 +1,6 @@
 <div class="wrapper">
     <app-add-horse [owners]="owners" (addHorse)="addHorse($event)"></app-add-horse>
-    <app-horse-search></app-horse-search>
+    <app-horse-search (searchHorse)="searchHorse($event)"></app-horse-search>
     <div *ngIf="error" class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>Error! </strong> {{ errorMessage }}
         <button type="button" (click)="vanishError()" class="close" data-dismiss="alert" aria-label="Close">

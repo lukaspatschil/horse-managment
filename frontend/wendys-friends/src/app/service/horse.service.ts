@@ -61,7 +61,7 @@ export class HorseService {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
 
-    let params = new HttpParams().set("params", horse.name).set("params", horse.notes).set("params", horse.birthday).set("params", horse.race).set("params", horse.rating.toString());
+    let params = new HttpParams().set("name", horse.name).set("notes", horse.notes).set("birthday", horse.birthday).set("race", horse.race).set("rating", horse.rating.toString());
 
     return this.httpClient.get<Horse[]>(this.messageBaseUri + '/search', {headers: headers, params: params});
   }

@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint.mapper;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseSearch;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,9 @@ public class HorseMapper {
 
     public Horse dtoToEntity(HorseDto horse) {
         return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), Base64.getDecoder().decode(horse.getImage()), horse.getType(), horse.getCreatedAt(),  horse.getUpdatedAt());
+    }
+
+    public Horse paramstoEntity(HorseSearch horse) {
+        return new Horse(Long.valueOf(0), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirhtday(), horse.getRace(), Long.valueOf(0), Base64.getDecoder().decode(""), "", null,  null);
     }
 }

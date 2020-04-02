@@ -76,9 +76,7 @@ export class HorseComponent implements OnInit {
   public updateHorse(horse: Horse) {
     this.horseService.updateHorse(horse).subscribe(
       horse => {},
-      error => {
-        this.defaultServiceErrorHandling(error);
-      }
+      error => this.defaultServiceErrorHandling(error)
     );
   }
 
@@ -91,6 +89,13 @@ export class HorseComponent implements OnInit {
     this.horses = this.horses.filter(o => o.id !== horse.id);
     // Remove from server
     this.horseService.deleteHorse(horse).subscribe();
+  }
+
+  public searchHorse(horse: Horse) {
+    this.horseService.searchHorse(horse).subscribe(
+      horses => this.horses = horses,
+      error => this.defaultServiceErrorHandling(error)
+      );
   }
 
   private defaultServiceErrorHandling(error: any) {

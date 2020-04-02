@@ -1,6 +1,7 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint;
 
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
+import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseSearch;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.HorseMapper;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
@@ -63,10 +64,11 @@ public class HorseEndpoint {
     }
 
     @GetMapping("/search")
-    public List<HorseDto> searchHorse(@RequestParam("params") HorseDto params) {
+    public List<HorseDto> searchHorse(HorseSearch params) {
         LOGGER.info("GET (search) " + BASE_URL + "/{}", params);
         try {
-            return horseMapper.entitysToDto(horseService.searchHorse(horseMapper.dtoToEntity(params)));
+            LOGGER.error("{}", params);
+            return horseMapper.entitysToDto(horseService.searchHorse(horseMapper.paramstoEntity(params)));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         }

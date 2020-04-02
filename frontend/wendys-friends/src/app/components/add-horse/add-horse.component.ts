@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Output, Input } from "@angular/core";
-import { OwnerService } from "../../service/owner.service";
 
 import { Owner } from "src/app/dto/owner";
 import { Horse } from 'src/app/dto/horse';
@@ -11,7 +10,7 @@ import { Horse } from 'src/app/dto/horse';
 })
 export class AddHorseComponent implements OnInit {
   @Input() owners: Owner[];
-  @Output() addHorse: EventEmitter<any> = new EventEmitter();
+  @Output() addHorse: EventEmitter<Horse> = new EventEmitter();
 
   name: string;
   notes: string;
@@ -25,7 +24,7 @@ export class AddHorseComponent implements OnInit {
   imageEncode: string;
   fileList: FileList;
 
-  constructor(private ownerService: OwnerService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.rating = 0;
@@ -37,6 +36,7 @@ export class AddHorseComponent implements OnInit {
     if (this.notes == null) {
       this.notes = "";
     }
+    
     const horse = new Horse(0, this.name, this.notes, this.rating, this.birthday, this.owner, this.race, this.imageEncode, this.type, null, null);
 
     console.log(horse);
