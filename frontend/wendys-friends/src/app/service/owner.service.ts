@@ -61,11 +61,8 @@ export class OwnerService {
   }
 
   searchOwner(owner:Owner):Observable<Owner[]> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-
     let params = new HttpParams().set("params", owner.name);
 
-    return this.httpClient.get<Owner[]>(this.messageBaseUri + '/search', {headers: headers, params: params});
+    return this.httpClient.get<Owner[]>(this.messageBaseUri + '/search', {params: params});
   }
 }
