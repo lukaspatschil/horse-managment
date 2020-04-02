@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Horse } from 'src/app/dto/horse';
+import { SearchHorse } from 'src/app/dto/searchHorse';
 
 @Component({
   selector: 'app-horse-search',
@@ -7,11 +8,11 @@ import { Horse } from 'src/app/dto/horse';
   styleUrls: ['./horse-search.component.scss']
 })
 export class HorseSearchComponent implements OnInit {
-  @Output() searchHorse: EventEmitter<Horse> = new EventEmitter();
+  @Output() searchHorse: EventEmitter<SearchHorse> = new EventEmitter();
 
   name: string;
   notes: string;
-  rating = 0;
+  rating: number;
   birthday: string;
   race: string;
 
@@ -21,9 +22,10 @@ export class HorseSearchComponent implements OnInit {
   }
 
   onSubmit() {
-    const horse = new Horse(0, this.name, this.notes, this.rating, this.birthday, 0, this.race, null, null, null, null);
+    if (this.rating === undefined)
+      this.rating = 0;
 
-    console.log(horse);
+    const horse = new SearchHorse(this.name, this.notes, this.rating, this.birthday, this.race);
 
     this.searchHorse.emit(horse);
   }

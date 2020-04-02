@@ -65,12 +65,11 @@ public class HorseEndpoint {
 
     @GetMapping("/search")
     public List<HorseDto> searchHorse(HorseSearch params) {
-        LOGGER.info("GET (search) " + BASE_URL + "/{}", params);
+        LOGGER.info("GET (search) " + BASE_URL + "/{}", params.getName());
         try {
-            LOGGER.error("{}", params);
             return horseMapper.entitysToDto(horseService.searchHorse(horseMapper.paramstoEntity(params)));
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during searching horse", e);
         }
     }
 

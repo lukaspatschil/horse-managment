@@ -8,9 +8,9 @@ public class HorseDto extends BaseDto {
 
     private String name;
     private String notes;
-    private int rating;
+    private Integer rating;
     private LocalDate birthday;
-    private HorseRace race;
+    private String race;
     private Long owner;
     private String image;
     String type;
@@ -18,7 +18,7 @@ public class HorseDto extends BaseDto {
     public HorseDto() {
     }
 
-    public HorseDto(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, String image, String type, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, Integer rating, LocalDate birthday, String race, Long owner, String image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
@@ -29,7 +29,7 @@ public class HorseDto extends BaseDto {
         this.type = type;
     }
 
-    public HorseDto(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, String image, String type, LocalDateTime created, LocalDateTime updated) {
+    public HorseDto(Long id, String name, String notes, Integer rating, LocalDate birthday, String race, Long owner, String image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -65,19 +65,19 @@ public class HorseDto extends BaseDto {
         this.notes = notes;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public HorseRace getRace() {
+    public String getRace() {
         return race;
     }
 
-    public void setRace(HorseRace race) {
+    public void setRace(String race) {
         this.race = race;
     }
 

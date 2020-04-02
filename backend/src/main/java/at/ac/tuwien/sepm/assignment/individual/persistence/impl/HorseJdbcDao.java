@@ -1,11 +1,11 @@
 package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
-import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class HorseJdbcDao implements HorseDao {
         horse.setNotes(resultSet.getString("notes"));
         horse.setRating(resultSet.getInt("rating"));
         horse.setBirthday(resultSet.getDate("birthday").toLocalDate());
-        horse.setRace(HorseRace.valueOf(resultSet.getString("race")));
+        horse.setRace(resultSet.getString("race"));
         horse.setOwner(resultSet.getLong("owner"));
         horse.setImage(resultSet.getBytes("image"));
         horse.setType(resultSet.getString("type"));
@@ -125,7 +125,7 @@ public class HorseJdbcDao implements HorseDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, horse.getName());
-            stmt.setString(2, horse.getRace().toString());
+            stmt.setString(2, horse.getRace());
             stmt.setObject(3, horse.getNotes(), Types.VARCHAR);
             stmt.setInt(4, horse.getRating());
             stmt.setObject(5, horse.getBirthday());
@@ -142,33 +142,35 @@ public class HorseJdbcDao implements HorseDao {
     public List<Horse> searchHorse(Horse param) {
         LOGGER.trace("Search horses with params {}", param);
 
-        String notes, race, rating, birthday;
-        notes = race = rating = birthday = "";
+        final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UPPER(name) LIKE ? AND UPPER(notes) like ? " +
+            "AND UPPER(race) like ? AND rating like ? AND birthday >= ?";
 
-        if (param.getNotes() != null) {
-            notes = " AND notes LIKE UPPER(?)";
-        }
-        if (param.getRace() != null) {
-            race = " AND race=?";
-        }
-        if (param.getRating() > 0 && param.getRating() < 6) {
-            rating = " AND rating=?";
-        }
-        if (param.getBirthday() != null) {
-            birthday= " AND birthday>=?";
-        }
+        LOGGER.error("1:{},2:{},3:{},4:{},5:{},",param.getName(), param.getNotes(), param.getRace(), param.getRating(), param.getBirthday());
 
-        final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE name LIKE LOWER(?)" + notes + race + rating + birthday;
+        if (param.getName() == null)
+            param.setName("");
+        if (param.getNotes() == null)
+            param.setNotes("");
 
-        List<Horse> horses = jdbcTemplate.query(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, param.getName());
-            stmt.setString(2, param.getNotes());
-            stmt.setString(3, param.getRace().toString());
-            stmt.setInt(4, param.getRating());
-            stmt.setObject(5, param.getBirthday());
-            return stmt;
-        }, this::mapRow);
+        LOGGER.error("1:{},2:{},3:{},4:{},5:{},",param.getName(), param.getNotes(), param.getRace(), param.getRating(), param.getBirthday());
+
+        param.setName("%" + param.getName().toUpperCase() + "%");
+        param.setNotes("%" + param.getNotes().toUpperCase() + "%");
+
+        if (param.getRace() == null)
+            param.setRace("%");
+        if (param.getRace().isEmpty())
+            param.setRace("%");
+        param.setRace(param.getRace().toUpperCase());
+
+        LOGGER.error("1:{},2:{},3:{},4:{},5:{},",param.getName(), param.getNotes(), param.getRace(), param.getRating(), param.getBirthday());
+
+        List<Horse> horses = jdbcTemplate.query(sql, new Object[] { param.getName(), param.getNotes(), param.getRace(), (param.getRating() != null) ? param.getRating() : "%" , (param.getBirthday() != null) ? param.getBirthday() : "1900-01-01"  }, this::mapRow);
+        LOGGER.error("{}", horses.size());
+
+        if (horses.isEmpty())
+            throw new NotFoundException("Could not find horse with given params");
+
         return horses;
     }
 }

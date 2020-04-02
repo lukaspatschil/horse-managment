@@ -3,6 +3,7 @@ import { HorseService } from "../../service/horse.service";
 import { Horse } from "src/app/dto/horse";
 import { OwnerService } from "../../service/owner.service";
 import { Owner } from "../../dto/owner";
+import { SearchHorse } from 'src/app/dto/searchHorse';
 
 @Component({
   selector: "app-horse",
@@ -91,7 +92,7 @@ export class HorseComponent implements OnInit {
     this.horseService.deleteHorse(horse).subscribe();
   }
 
-  public searchHorse(horse: Horse) {
+  public searchHorse(horse: SearchHorse) {
     this.horseService.searchHorse(horse).subscribe(
       horses => this.horses = horses,
       error => this.defaultServiceErrorHandling(error)

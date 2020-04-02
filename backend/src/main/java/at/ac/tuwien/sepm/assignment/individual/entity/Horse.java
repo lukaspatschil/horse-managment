@@ -4,23 +4,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
-import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseRace;
 
 public class Horse extends BaseEntity {
 
     private String name;
     private String notes;
-    private int rating;
+    private Integer rating;
     private LocalDate birthday;
     private Long owner;
-    private HorseRace race;
+    private String race;
     private byte[] image;
     private String type;
 
     public Horse() {
     }
 
-    public Horse(Long id, String name, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, String type, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, Integer rating, LocalDate birthday, String race, Long owner, byte[] image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.rating = rating;
@@ -31,7 +30,7 @@ public class Horse extends BaseEntity {
         this.type = type;
     }
 
-    public Horse(Long id, String name, String notes, int rating, LocalDate birthday, HorseRace race, Long owner, byte[] image, String type, LocalDateTime created, LocalDateTime updated) {
+    public Horse(Long id, String name, String notes, Integer rating, LocalDate birthday, String race, Long owner, byte[] image, String type, LocalDateTime created, LocalDateTime updated) {
         super(id, created, updated);
         this.name = name;
         this.notes = notes;
@@ -67,11 +66,11 @@ public class Horse extends BaseEntity {
         this.notes = notes;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -83,11 +82,11 @@ public class Horse extends BaseEntity {
         this.owner = owner;
     }
 
-    public HorseRace getRace() {
+    public String getRace() {
         return race;
     }
 
-    public void setRace(HorseRace race) {
+    public void setRace(String race) {
         this.race = race;
     }
 

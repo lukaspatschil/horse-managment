@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Globals } from "../global/globals";
 import { Observable } from "rxjs";
 import { Horse } from "../dto/horse";
+import { SearchHorse } from '../dto/searchHorse';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -57,12 +58,27 @@ export class HorseService {
     );
   }
 
-  searchHorse(horse:Horse):Observable<Horse[]> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
+  searchHorse(horse:SearchHorse):Observable<Horse[]> {
+    let params = new HttpParams();
 
-    let params = new HttpParams().set("name", horse.name).set("notes", horse.notes).set("birthday", horse.birthday).set("race", horse.race).set("rating", horse.rating.toString());
+    console.log(horse);
+    
+    if (horse.name) {
+      params = params.set("name", horse.name);
+    }
+    if (horse.notes) {
+      params = params.set("notes", horse.notes);
+    }
+    if (horse.birthday) {
+      params = params.set("birthday", horse.birthday);
+    }
+    if (horse.rating) {
+      params = params.set("rating", horse.rating.toString());
+    }
+    if (horse.race) {
+      params = params.set("race", horse.race);
+    }
 
-    return this.httpClient.get<Horse[]>(this.messageBaseUri + '/search', {headers: headers, params: params});
+    return this.httpClient.get<Horse[]>(this.messageBaseUri + '/search', {params: params});
   }
 }

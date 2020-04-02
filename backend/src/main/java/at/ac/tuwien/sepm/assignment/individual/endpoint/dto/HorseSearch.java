@@ -1,16 +1,22 @@
 package at.ac.tuwien.sepm.assignment.individual.endpoint.dto;
 
+import javax.validation.constraints.Null;
 import java.time.LocalDate;
 
 public class HorseSearch {
 
+    @Null
     String name;
+    @Null
     String notes;
+    @Null
     LocalDate birhtday;
-    HorseRace race;
-    int rating;
+    @Null
+    String race;
+    @Null
+    Integer rating;
 
-    public HorseSearch(String name, String notes, LocalDate birhtday, HorseRace race, int rating) {
+    public HorseSearch(String name, String notes, LocalDate birhtday, String race, Integer rating) {
         this.name = name;
         this.notes = notes;
         this.birhtday = birhtday;
@@ -18,19 +24,19 @@ public class HorseSearch {
         this.rating = rating;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public HorseRace getRace() {
+    public String getRace() {
         return race;
     }
 
-    public void setRace(HorseRace race) {
+    public void setRace(String race) {
         this.race = race;
     }
 
