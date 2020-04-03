@@ -28,6 +28,9 @@ public class SimpleHorseService implements HorseService{
     @Override
     public Horse findOneById(Long id) {
         LOGGER.trace("findOneById({})", id);
+
+        validator.validateId(id);
+
         return horseDao.findOneById(id);
     }
 
@@ -40,6 +43,9 @@ public class SimpleHorseService implements HorseService{
     @Override
     public List<Horse> getHorsefromOwner(Long id) {
         LOGGER.trace("getHorsesformOwner({}}", id);
+
+        validator.validateId(id);
+
         return horseDao.getHorsefromOwner(id);
     }
 
@@ -47,7 +53,7 @@ public class SimpleHorseService implements HorseService{
     public Horse save(Horse horse) {
         LOGGER.trace("saveOwnerwithId({})", horse.getId());
 
-        // do some validation
+        validator.validateNewHorse(horse);
 
         return horseDao.save(horse);
     }
@@ -56,7 +62,7 @@ public class SimpleHorseService implements HorseService{
     public void delete(Long id) {
         LOGGER.trace("deleteHorsewithId({})", id);
 
-        //TODO validation?
+        validator.validateId(id);
 
         horseDao.delete(id);
     }
@@ -65,7 +71,8 @@ public class SimpleHorseService implements HorseService{
     public Horse update(Long id, Horse horse) {
         LOGGER.trace("updateOwnerWithID({})", id);
 
-        //TODO validation if empty replace with current value
+        validator.validateNewHorse(horse);
+        validator.validateId(id);
 
         return horseDao.update(id, horse);
     }
@@ -74,7 +81,7 @@ public class SimpleHorseService implements HorseService{
     public List<Horse> searchHorse(Horse param) {
         LOGGER.trace("searchHorse({})", param);
 
-        //TODO validation
+        validator.validateSearchHorse(param);
 
         return horseDao.searchHorse(param);
     }

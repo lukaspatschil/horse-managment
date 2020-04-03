@@ -3,12 +3,14 @@ package at.ac.tuwien.sepm.assignment.individual.persistence;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import org.springframework.dao.DataAccessException;
+import java.sql.SQLException;
 
 import java.util.List;
 
 public interface OwnerDao {
 
     /**
+     * finds a owner in the database by id
      * @param id of the owner to find.
      * @return the owner with the specified id.
      * @throws DataAccessException will be thrown if something goes wrong during the database access.
@@ -17,33 +19,43 @@ public interface OwnerDao {
     Owner findOneById(Long id);
 
     /**
-     * TODO: add doc
-     * @return
+     * finds all owners in the database
+     * @return the owners saved in the database
+     * @throws DataAccessException will be thrown if something goes wrong during the database access.
      */
     List<Owner> getAllOwner();
 
     /**
-     *
-     * @param owner the owner to save in the db
+     * saves a owner entity to the database
+     * @param owner the owner to save in the database
      * @return the owner which was saved
-     * @throws //add here
+     * @throws DataAccessException will be thrown if something goes wrong during the database access.
      */
     Owner save(Owner owner);
 
     /**
-     * TODO: add doc
-     * @param id
-     * @return
+     * deletes an owner with the given id
+     * @param id the id of the owner which should be deleted
+     * @throws DataAccessException will be thrown if something goes wrong during the database access.
      */
     void delete(Long id);
 
     /**
-     *
-     * @param id
-     * @param owner
-     * @return
+     * updates the owner with the id
+     * @param id the id of the owner which should be updated
+     * @param owner the new values for the owner
+     * @return the updated owner
+     * @throws DataAccessException will be thrown if something goes wrong during the database access.
+     * @throws NotFoundException   will be thrown if the owner could not be found in the database.
      */
     Owner update(Long id, Owner owner);
 
+    /**
+     * search for all owners with the given parameters
+     * @param param the search parameters for the owners
+     * @return all owners which are in the parameters
+     * @throws DataAccessException will be thrown if something goes wrong during the database access.
+     * @throws NotFoundException   will be thrown if the owner could not be found in the database.
+     */
     List<Owner> searchOwner(Owner param);
 }

@@ -38,17 +38,16 @@ public class OwnerEndpoint {
             return ownerMapper.entityToDto(ownerService.findOneById(id));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 
     @GetMapping
     public List<OwnerDto> getAllOwner() {
         LOGGER.info("GET " + BASE_URL + " all owners");
-        try {
-            return ownerMapper.entitysToDto(ownerService.getAllOwner());
-        } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
-        }
+
+        return ownerMapper.entitysToDto(ownerService.getAllOwner());
     }
 
     @GetMapping("/search")
@@ -58,6 +57,8 @@ public class OwnerEndpoint {
             return ownerMapper.entitysToDto(ownerService.searchOwner(ownerMapper.dtoToEntity(params)));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during searching owner", e);
         }
     }
 
@@ -69,9 +70,7 @@ public class OwnerEndpoint {
             Owner ownerEntity = ownerMapper.dtoToEntity(owner);
             return ownerMapper.entityToDto(ownerService.save(ownerEntity));
         } catch (ValidationException e) {
-            throw new
-                ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                    "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 
@@ -82,6 +81,8 @@ public class OwnerEndpoint {
             ownerService.delete(id);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 
@@ -91,7 +92,9 @@ public class OwnerEndpoint {
         try {
             return ownerMapper.entityToDto(ownerService.update(id, ownerMapper.dtoToEntity(newOwner)));
         } catch (NotFoundException e) {
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during updating owner", e);
         }
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -31,18 +32,19 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public Owner findOneById(Long id) {
+    public Owner findOneById(Long id) throws DataAccessException, NotFoundException {
         LOGGER.trace("Get owner with id {}", id);
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Owner> owners = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
 
-        if (owners.isEmpty()) throw new NotFoundException("Could not find owner with id " + id);
+        if (owners.isEmpty())
+            throw new NotFoundException("Could not find owner with id %s" + id);
 
         return owners.get(0);
     }
 
     @Override
-    public List<Owner> getAllOwner() {
+    public List<Owner> getAllOwner() throws DataAccessException {
         LOGGER.trace("Get all the owner from the database");
         final String sql = "SELECT * FROM " + TABLE_NAME;
         List<Owner> owners = jdbcTemplate.query(sql, this::mapRow);
@@ -61,7 +63,7 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public Owner save(Owner owner) {
+    public Owner save(Owner owner) throws DataAccessException {
         LOGGER.trace("Save owner with name {}", owner.getName());
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -82,7 +84,7 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataAccessException {
         LOGGER.trace("Delete owner with id {}", id);
 
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
@@ -94,7 +96,7 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public Owner update(Long id, Owner owner) {
+    public Owner update(Long id, Owner owner) throws DataAccessException, NotFoundException {
         LOGGER.trace("Update owner with id {}", owner.getId());
 
         owner.setUpdatedAt(LocalDateTime.now());
@@ -107,20 +109,27 @@ public class OwnerJdbcDao implements OwnerDao {
             stmt.setLong(3, id);
             return stmt;
         });
+
         return findOneById(id);
     }
 
     @Override
-    public List<Owner> searchOwner(Owner param) {
+    public List<Owner> searchOwner(Owner param) throws DataAccessException, NotFoundException {
         LOGGER.trace("Search owners with params {}", param);
 
         final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE UPPER(name) LIKE UPPER(?)";
+
+        param.setName("%" + param.getName() + "%");
 
         List<Owner> owners = jdbcTemplate.query(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, param.getName());
             return stmt;
         }, this::mapRow);
+
+        if (owners.isEmpty())
+            throw new NotFoundException("Could not find owner with parmeters.");
+
         return owners;
     }
 }

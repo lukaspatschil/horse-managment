@@ -12,7 +12,7 @@ export class HorseSearchComponent implements OnInit {
 
   name: string;
   notes: string;
-  rating: number;
+  rating = 0;
   birthday: string;
   race: string;
 
@@ -22,9 +22,6 @@ export class HorseSearchComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.rating === undefined)
-      this.rating = 0;
-
     const horse = new SearchHorse(this.name, this.notes, this.rating, this.birthday, this.race);
 
     this.searchHorse.emit(horse);

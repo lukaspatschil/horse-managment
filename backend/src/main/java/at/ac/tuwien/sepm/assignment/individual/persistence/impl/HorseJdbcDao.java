@@ -10,6 +10,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -32,7 +33,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse findOneById(Long id) {
+    public Horse findOneById(Long id) throws NotFoundException, DataAccessException {
         LOGGER.trace("Get horse with id {}", id);
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
@@ -43,7 +44,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public List<Horse> getAllHorse() {
+    public List<Horse> getAllHorse() throws DataAccessException {
         LOGGER.trace("Get all the horses from the database");
         final String sql = "SELECT * FROM " + TABLE_NAME;
         List<Horse> horses = jdbcTemplate.query(sql, this::mapRow);
@@ -52,7 +53,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public List<Horse> getHorsefromOwner(Long id) {
+    public List<Horse> getHorsefromOwner(Long id) throws DataAccessException {
         LOGGER.trace("Get horses from owner with if {}", id);
         final String sql = "SELECT * FROM " +TABLE_NAME + " WHERE owner=?";
         List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
@@ -76,7 +77,7 @@ public class HorseJdbcDao implements HorseDao {
         return horse;
     }
 
-    @Override public Horse save(Horse horse) {
+    @Override public Horse save(Horse horse) throws DataAccessException {
         LOGGER.trace("Save horse with name {}", horse.getName());
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -104,7 +105,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataAccessException {
         LOGGER.trace("Delete horse with id {}", id);
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
         jdbcTemplate.update(connection -> {
@@ -115,7 +116,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse update(Long id, Horse horse) {
+    public Horse update(Long id, Horse horse) throws NotFoundException, DataAccessException {
         LOGGER.trace("Update horse with id {}", horse.getId());
 
         horse.setUpdatedAt(LocalDateTime.now());
@@ -135,24 +136,21 @@ public class HorseJdbcDao implements HorseDao {
             stmt.setLong(9, id);
             return stmt;
         });
+
         return findOneById(id);
     }
 
     @Override
-    public List<Horse> searchHorse(Horse param) {
+    public List<Horse> searchHorse(Horse param) throws NotFoundException, DataAccessException {
         LOGGER.trace("Search horses with params {}", param);
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UPPER(name) LIKE ? AND UPPER(notes) like ? " +
             "AND UPPER(race) like ? AND rating like ? AND birthday >= ?";
 
-        LOGGER.error("1:{},2:{},3:{},4:{},5:{},",param.getName(), param.getNotes(), param.getRace(), param.getRating(), param.getBirthday());
-
         if (param.getName() == null)
             param.setName("");
         if (param.getNotes() == null)
             param.setNotes("");
-
-        LOGGER.error("1:{},2:{},3:{},4:{},5:{},",param.getName(), param.getNotes(), param.getRace(), param.getRating(), param.getBirthday());
 
         param.setName("%" + param.getName().toUpperCase() + "%");
         param.setNotes("%" + param.getNotes().toUpperCase() + "%");
@@ -163,10 +161,7 @@ public class HorseJdbcDao implements HorseDao {
             param.setRace("%");
         param.setRace(param.getRace().toUpperCase());
 
-        LOGGER.error("1:{},2:{},3:{},4:{},5:{},",param.getName(), param.getNotes(), param.getRace(), param.getRating(), param.getBirthday());
-
         List<Horse> horses = jdbcTemplate.query(sql, new Object[] { param.getName(), param.getNotes(), param.getRace(), (param.getRating() != null) ? param.getRating() : "%" , (param.getBirthday() != null) ? param.getBirthday() : "1900-01-01"  }, this::mapRow);
-        LOGGER.error("{}", horses.size());
 
         if (horses.isEmpty())
             throw new NotFoundException("Could not find horse with given params");

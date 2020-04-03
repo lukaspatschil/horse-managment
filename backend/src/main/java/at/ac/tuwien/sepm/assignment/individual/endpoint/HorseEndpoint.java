@@ -13,7 +13,6 @@ import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,17 +39,16 @@ public class HorseEndpoint {
             return horseMapper.entityToDto(horseService.findOneById(id));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 
     @GetMapping
     public List<HorseDto> getAllHorse() {
         LOGGER.info("GET " + BASE_URL + " all horses");
-        try {
-            return horseMapper.entitysToDto(horseService.getAllHorse());
-        } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
-        }
+
+        return horseMapper.entitysToDto(horseService.getAllHorse());
     }
 
     @GetMapping("/owners/{id}")
@@ -60,6 +58,8 @@ public class HorseEndpoint {
             return horseMapper.entitysToDto(horseService.getHorsefromOwner(id));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse");
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 
@@ -80,9 +80,7 @@ public class HorseEndpoint {
         try {
             return horseMapper.entityToDto(horseService.save(horseMapper.dtoToEntity(horse)));
         } catch (ValidationException e) {
-            throw new
-                ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-                "Error during saving horse", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving horse", e);
         }
     }
 
@@ -93,6 +91,8 @@ public class HorseEndpoint {
             horseService.delete(id);
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 
@@ -104,6 +104,8 @@ public class HorseEndpoint {
             return horseMapper.entityToDto(horseService.update(id, newHorseEntity));
         } catch (NotFoundException e) {
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+        } catch (ValidationException e) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
         }
     }
 }
