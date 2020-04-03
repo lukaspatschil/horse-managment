@@ -39,7 +39,7 @@ public class OwnerEndpoint {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during reading owner", e);
         }
     }
 
@@ -80,9 +80,9 @@ public class OwnerEndpoint {
         try {
             ownerService.delete(id);
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during deleting owner", e);
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during deleting owner", e);
         }
     }
 
@@ -92,7 +92,7 @@ public class OwnerEndpoint {
         try {
             return ownerMapper.entityToDto(ownerService.update(id, ownerMapper.dtoToEntity(newOwner)));
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating owner", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during updating owner", e);
         }

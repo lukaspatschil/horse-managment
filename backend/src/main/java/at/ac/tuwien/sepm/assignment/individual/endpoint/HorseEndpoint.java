@@ -40,7 +40,7 @@ public class HorseEndpoint {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during reading owner", e);
         }
     }
 
@@ -59,7 +59,7 @@ public class HorseEndpoint {
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse");
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during reading owner", e);
         }
     }
 
@@ -90,9 +90,9 @@ public class HorseEndpoint {
         try {
             horseService.delete(id);
         } catch (NotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during deleting horse", e);
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during deleting owner", e);
         }
     }
 
@@ -103,9 +103,9 @@ public class HorseEndpoint {
             Horse newHorseEntity = horseMapper.dtoToEntity(newHorse);
             return horseMapper.entityToDto(horseService.update(id, newHorseEntity));
         } catch (NotFoundException e) {
-            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating horse", e);
         } catch (ValidationException e) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during updating owner", e);
         }
     }
 }
