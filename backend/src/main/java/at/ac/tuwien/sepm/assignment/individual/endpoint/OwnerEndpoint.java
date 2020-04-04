@@ -4,6 +4,7 @@ import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.OwnerDto;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.mapper.OwnerMapper;
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.service.OwnerService;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -40,6 +41,8 @@ public class OwnerEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during reading owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -59,6 +62,8 @@ public class OwnerEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading owner", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during searching owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -71,6 +76,8 @@ public class OwnerEndpoint {
             return ownerMapper.entityToDto(ownerService.save(ownerEntity));
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -83,6 +90,8 @@ public class OwnerEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during deleting owner", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during deleting owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -95,6 +104,8 @@ public class OwnerEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating owner", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during updating owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 }

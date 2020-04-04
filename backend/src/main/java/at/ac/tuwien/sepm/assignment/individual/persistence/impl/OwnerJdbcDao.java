@@ -2,6 +2,7 @@ package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.OwnerDao;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
@@ -32,10 +33,17 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public Owner findOneById(Long id) throws DataAccessException, NotFoundException {
+    public Owner findOneById(Long id) throws PersistenceException, NotFoundException {
         LOGGER.trace("Get owner with id {}", id);
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
-        List<Owner> owners = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
+        List<Owner> owners;
+
+        try {
+            owners = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read owner (PersistenceException)");
+            throw new PersistenceException("Could not read owner", e);
+        }
 
         if (owners.isEmpty()) {
             LOGGER.error("Owner not found.");
@@ -46,10 +54,17 @@ public class OwnerJdbcDao implements OwnerDao {
     }
 
     @Override
-    public List<Owner> getAllOwner() throws DataAccessException {
+    public List<Owner> getAllOwner() throws PersistenceException {
         LOGGER.trace("Get all the owner from the database");
         final String sql = "SELECT * FROM " + TABLE_NAME;
-        List<Owner> owners = jdbcTemplate.query(sql, this::mapRow);
+        List<Owner> owners;
+
+        try {
+            owners = jdbcTemplate.query(sql, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read owners (PersistenceException)");
+            throw new PersistenceException("Could not read owners", e);
+        }
 
         return owners;
     }
@@ -74,60 +89,87 @@ public class OwnerJdbcDao implements OwnerDao {
         owner.setUpdatedAt(currentTime);
         final String sql = "INSERT INTO " + TABLE_NAME + " (name, created_at, updated_at)" + " VALUES (?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        stmt.setString(1, owner.getName());
-        stmt.setObject(2 , owner.getCreatedAt());
-        stmt.setObject(3, owner.getUpdatedAt());
-        return stmt;
-        }, keyHolder);
+
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, owner.getName());
+                stmt.setObject(2 , owner.getCreatedAt());
+                stmt.setObject(3, owner.getUpdatedAt());
+                return stmt;
+            }, keyHolder);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not save owners (PersistenceException)");
+            throw new PersistenceException("Could not save owners", e);
+        }
+
+
         owner.setId(((Number)keyHolder.getKeys().get("id")).longValue());
         return owner;
     }
 
     @Override
-    public void delete(Long id) throws DataAccessException {
+    public void delete(Long id) throws PersistenceException {
         LOGGER.trace("Delete owner with id {}", id);
 
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setLong(1, id);
-            return stmt;
-        });
+
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setLong(1, id);
+                return stmt;
+            });
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not delete owners (PersistenceException)");
+            throw new PersistenceException("Could not delete owners", e);
+        }
     }
 
     @Override
-    public Owner update(Long id, Owner owner) throws DataAccessException, NotFoundException {
+    public Owner update(Long id, Owner owner) throws DataAccessException, PersistenceException {
         LOGGER.trace("Update owner with id {}", owner.getId());
 
         owner.setUpdatedAt(LocalDateTime.now());
         final String sql = "UPDATE " + TABLE_NAME + " SET name=?,updated_at=? WHERE id=?";
 
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, owner.getName());
-            stmt.setObject(2 , owner.getUpdatedAt());
-            stmt.setLong(3, id);
-            return stmt;
-        });
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, owner.getName());
+                stmt.setObject(2, owner.getUpdatedAt());
+                stmt.setLong(3, id);
+                return stmt;
+            });
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not update owners (PersistenceException)");
+            throw new PersistenceException("Could not update owners", e);
+        }
 
         return findOneById(id);
     }
 
     @Override
-    public List<Owner> searchOwner(Owner param) throws DataAccessException, NotFoundException {
+    public List<Owner> searchOwner(Owner param) throws DataAccessException, PersistenceException {
         LOGGER.trace("Search owners with params {}", param);
 
         final String sql= "SELECT * FROM " + TABLE_NAME + " WHERE UPPER(name) LIKE UPPER(?)";
 
         param.setName("%" + param.getName() + "%");
 
-        List<Owner> owners = jdbcTemplate.query(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, param.getName());
-            return stmt;
-        }, this::mapRow);
+        List<Owner> owners;
+
+        try {
+            owners = jdbcTemplate.query(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, param.getName());
+                return stmt;
+            }, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read owners (PersistenceException)");
+            throw new PersistenceException("Could not read owners", e);
+        }
+
 
         if (owners.isEmpty()) {
             LOGGER.error("Owner not found.");

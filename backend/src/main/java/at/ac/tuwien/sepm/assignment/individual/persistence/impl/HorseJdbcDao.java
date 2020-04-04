@@ -2,10 +2,10 @@ package at.ac.tuwien.sepm.assignment.individual.persistence.impl;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
+import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +33,17 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public Horse findOneById(Long id) throws NotFoundException, DataAccessException {
+    public Horse findOneById(Long id) throws NotFoundException, PersistenceException {
         LOGGER.trace("Get horse with id {}", id);
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
-        List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
+        List<Horse> horses;
+
+        try {
+            horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read horse (PersistenceException)");
+            throw new PersistenceException("Could not read horse with id" + id, e);
+        }
 
         if (horses.isEmpty()) {
             LOGGER.error("Horse not found.");
@@ -47,19 +54,33 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public List<Horse> getAllHorse() throws DataAccessException {
+    public List<Horse> getAllHorse() throws PersistenceException {
         LOGGER.trace("Get all the horses from the database");
         final String sql = "SELECT * FROM " + TABLE_NAME;
-        List<Horse> horses = jdbcTemplate.query(sql, this::mapRow);
+        List<Horse> horses;
+
+        try {
+            horses = jdbcTemplate.query(sql, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read horses (PersistenceException)");
+            throw new PersistenceException("Could not read horses", e);
+        }
 
         return horses;
     }
 
     @Override
-    public List<Horse> getHorsefromOwner(Long id) throws DataAccessException {
+    public List<Horse> getHorsefromOwner(Long id) throws PersistenceException {
         LOGGER.trace("Get horses from owner with if {}", id);
         final String sql = "SELECT * FROM " +TABLE_NAME + " WHERE owner=?";
-        List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
+        List<Horse> horses;
+
+        try {
+            horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read horses (PersistenceException)");
+            throw new PersistenceException("Could not read horses from owner with id " + id, e);
+        }
 
         return horses;
     }
@@ -80,7 +101,7 @@ public class HorseJdbcDao implements HorseDao {
         return horse;
     }
 
-    @Override public Horse save(Horse horse) throws DataAccessException {
+    @Override public Horse save(Horse horse) throws PersistenceException {
         LOGGER.trace("Save horse with name {}", horse.getName());
 
         LocalDateTime currentTime = LocalDateTime.now();
@@ -89,62 +110,85 @@ public class HorseJdbcDao implements HorseDao {
         horse.setUpdatedAt(currentTime);
         final String sql = "INSERT INTO " + TABLE_NAME + " (name, race, notes, rating, birthday, created_at, updated_at, owner, image, type)" + " VALUES (?,?,?,?,?,?,?,?,?,?);";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, horse.getName());
-            stmt.setString(2, horse.getRace().toString());
-            stmt.setString(3, horse.getNotes());
-            stmt.setInt(4, horse.getRating());
-            stmt.setObject(5, horse.getBirthday());
-            stmt.setObject(6 , horse.getCreatedAt());
-            stmt.setObject(7, horse.getUpdatedAt());
-            stmt.setLong(8, horse.getOwner());
-            stmt.setObject(9, horse.getImage(), Types.BLOB);
-            stmt.setString(10, horse.getType());
-            return stmt;
-        }, keyHolder);
+
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, horse.getName());
+                stmt.setString(2, horse.getRace());
+                stmt.setString(3, horse.getNotes());
+                stmt.setInt(4, horse.getRating());
+                stmt.setObject(5, horse.getBirthday());
+                stmt.setObject(6 , horse.getCreatedAt());
+                stmt.setObject(7, horse.getUpdatedAt());
+                stmt.setLong(8, horse.getOwner());
+                stmt.setObject(9, horse.getImage(), Types.BLOB);
+                stmt.setString(10, horse.getType());
+                return stmt;
+            }, keyHolder);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not save horse (PersistenceException)");
+            throw new PersistenceException("Could not read horses with name " + horse.getName(), e);
+        }
+
         horse.setId(((Number)keyHolder.getKeys().get("id")).longValue());
         return horse;
     }
 
     @Override
-    public void delete(Long id) throws DataAccessException {
+    public void delete(Long id) throws PersistenceException {
         LOGGER.trace("Delete horse with id {}", id);
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setLong(1, id);
-            return stmt;
-        });
+
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setLong(1, id);
+                return stmt; });
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not delete horse (PersistenceException)");
+            throw new PersistenceException("Could not delete horse with id" + id, e);
+        }
     }
 
     @Override
-    public Horse update(Long id, Horse horse) throws NotFoundException, DataAccessException {
+    public Horse update(Long id, Horse horse) throws NotFoundException, PersistenceException {
         LOGGER.trace("Update horse with id {}", horse.getId());
 
         horse.setUpdatedAt(LocalDateTime.now());
         final String sql = "UPDATE " + TABLE_NAME +
             " SET name = ?, race=?,notes=?,rating=?,birthday=?,updated_at=?, owner=?,image=? WHERE id = ? ";
 
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, horse.getName());
-            stmt.setString(2, horse.getRace());
-            stmt.setObject(3, horse.getNotes(), Types.VARCHAR);
-            stmt.setInt(4, horse.getRating());
-            stmt.setObject(5, horse.getBirthday());
-            stmt.setObject(6, horse.getUpdatedAt());
-            stmt.setLong(7, horse.getOwner());
-            stmt.setObject(8, horse.getImage(), Types.BLOB);
-            stmt.setLong(9, id);
-            return stmt;
-        });
+        try {
+            jdbcTemplate.update(connection -> {
+                PreparedStatement stmt = connection.prepareStatement(sql);
+                stmt.setString(1, horse.getName());
+                stmt.setString(2, horse.getRace());
+                stmt.setObject(3, horse.getNotes(), Types.VARCHAR);
+                stmt.setInt(4, horse.getRating());
+                stmt.setObject(5, horse.getBirthday());
+                stmt.setObject(6, horse.getUpdatedAt());
+                stmt.setLong(7, horse.getOwner());
+                stmt.setObject(8, horse.getImage(), Types.BLOB);
+                stmt.setLong(9, id);
+                return stmt;
+            });
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not update horse (PersistenceException)");
+            throw new PersistenceException("Could not update horse with id " + id, e);
+        }
 
-        return findOneById(id);
+        try {
+            return findOneById(id);
+        } catch (NotFoundException e) {
+            LOGGER.error("Horse not found.");
+            throw new NotFoundException("Could not find the horse with id " + id);
+        }
+
     }
 
     @Override
-    public List<Horse> searchHorse(Horse param) throws NotFoundException, DataAccessException {
+    public List<Horse> searchHorse(Horse param) throws NotFoundException, PersistenceException {
         LOGGER.trace("Search horses with params {}", param);
 
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UPPER(name) LIKE ? AND UPPER(notes) like ? " +
@@ -164,7 +208,14 @@ public class HorseJdbcDao implements HorseDao {
             param.setRace("%");
         param.setRace(param.getRace().toUpperCase());
 
-        List<Horse> horses = jdbcTemplate.query(sql, new Object[] { param.getName(), param.getNotes(), param.getRace(), (param.getRating() != null) ? param.getRating() : "%" , (param.getBirthday() != null) ? param.getBirthday() : "1900-01-01"  }, this::mapRow);
+        List<Horse> horses;
+
+        try {
+            horses = jdbcTemplate.query(sql, new Object[] { param.getName(), param.getNotes(), param.getRace(), (param.getRating() != null) ? param.getRating() : "%" , (param.getBirthday() != null) ? param.getBirthday() : "1900-01-01"  }, this::mapRow);
+        } catch (DataAccessException e) {
+            LOGGER.error("Could not read horse (PersistenceException)");
+            throw new PersistenceException("Could not read the horses", e);
+        }
 
         if (horses.isEmpty()) {
             LOGGER.error("Horse not found.");

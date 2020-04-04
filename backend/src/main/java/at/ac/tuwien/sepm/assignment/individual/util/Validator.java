@@ -25,17 +25,6 @@ public class Validator {
         }
     }
 
-    public void validateUpdateOwner(Owner owner) throws ValidationException {
-        if (owner.getName() == "" || owner.getName() == null) {
-            LOGGER.error("The owner name can not be empty.");
-            throw new ValidationException("The name can not be empty.");
-        }
-        if (owner.getName().length() > 255) {
-            LOGGER.error("The owner name can not be this long.");
-            throw new ValidationException("The name can not be this long.");
-        }
-    }
-
     public void validateSearchOwner(Owner owner) throws ValidationException {
         if (owner.getName() == null) {
             LOGGER.error("The owner name can not be null.");
@@ -52,7 +41,7 @@ public class Validator {
             LOGGER.error("The horse name can not be empty.");
             throw new ValidationException("The name can not be empty.");
         }
-        if (horse.getBirthday()== null || horse.getBirthday().isAfter(LocalDate.of(1980, 1, 1))) {
+        if (horse.getBirthday() == null || horse.getBirthday().isBefore(LocalDate.of(1980, 1, 1))) {
             LOGGER.error("The horse can not be this old and alive, don't lie.");
             throw new ValidationException("The horse can not be this old and alive, don't lie.");
         }
@@ -64,7 +53,7 @@ public class Validator {
             LOGGER.error("The horse must have a valid race.");
             throw new ValidationException("The horse must have a valid race.");
         }
-        if (!horse.getType().equals("data:image/png;base64,") && !horse.getType().equals("data:image/jpeg;base64,")) {
+        if (!horse.getType().equals("data:image/png;base64,") && !horse.getType().equals("data:image/jpeg;base64,") && !horse.getType().equals("data:image/jpg;base64,")) {
             LOGGER.error("The image has to be PNG or JPEG.");
             throw new ValidationException("The image has to be PNG or JPEG.");
         }

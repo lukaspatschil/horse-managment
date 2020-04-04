@@ -8,6 +8,7 @@ import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
+import at.ac.tuwien.sepm.assignment.individual.exception.ServiceException;
 import at.ac.tuwien.sepm.assignment.individual.service.HorseService;
 import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.slf4j.Logger;
@@ -42,6 +43,8 @@ public class HorseEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during reading owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -50,7 +53,11 @@ public class HorseEndpoint {
     public List<HorseDto> getAllHorse() {
         LOGGER.info("GET " + BASE_URL + " all horses");
 
-        return horseMapper.entitysToDto(horseService.getAllHorse());
+        try {
+            return horseMapper.entitysToDto(horseService.getAllHorse());
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
+        }
     }
 
     @GetMapping("/owners/{id}")
@@ -63,6 +70,8 @@ public class HorseEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during reading horse");
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during reading owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -74,6 +83,8 @@ public class HorseEndpoint {
             return horseMapper.entitysToDto(horseService.searchHorse(horseMapper.paramstoEntity(params)));
         } catch (NotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during searching horse", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -85,6 +96,8 @@ public class HorseEndpoint {
             return horseMapper.entityToDto(horseService.save(horseMapper.dtoToEntity(horse)));
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during saving horse", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -98,6 +111,8 @@ public class HorseEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during deleting horse", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during deleting owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 
@@ -112,6 +127,8 @@ public class HorseEndpoint {
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Error during updating horse", e);
         } catch (ValidationException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Error during updating owner", e);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error during data access");
         }
     }
 }
