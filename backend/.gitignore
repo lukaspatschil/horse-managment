@@ -28,6 +28,3 @@
 /dist/
 /nbdist/
 /.nb-gradle/
-
-### db ###
-wendydb.mv.db
