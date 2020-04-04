@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class SimpleOwnerService implements OwnerService {
@@ -27,11 +26,6 @@ public class SimpleOwnerService implements OwnerService {
     public SimpleOwnerService(OwnerDao ownerDao, Validator validator) {
         this.ownerDao = ownerDao;
         this.validator = validator;
-    }
-
-    private RuntimeException handleDataAccessException(String errMsg, DataAccessException e) {
-        LOGGER.error(errMsg, e);
-        return new RuntimeException(errMsg, e);
     }
 
     @Override
@@ -109,5 +103,10 @@ public class SimpleOwnerService implements OwnerService {
         } catch (DataAccessException e) {
             throw handleDataAccessException("Problem while searching owner with parameter", e);
         }
+    }
+
+    private RuntimeException handleDataAccessException(String errMsg, DataAccessException e) {
+        LOGGER.error(errMsg, e);
+        return new RuntimeException(errMsg, e);
     }
 }

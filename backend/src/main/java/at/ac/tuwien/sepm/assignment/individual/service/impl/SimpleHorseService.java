@@ -10,7 +10,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
+import javax.xml.crypto.Data;
 
 @Service
 public class SimpleHorseService implements HorseService{
@@ -30,14 +33,22 @@ public class SimpleHorseService implements HorseService{
         LOGGER.trace("findOneById({})", id);
 
         validator.validateId(id);
-
-        return horseDao.findOneById(id);
+        try {
+            return horseDao.findOneById(id);
+        } catch (DataAccessException e) {
+            throw handleDataAccessException(String.format("Problem while reading horse with id %s", id), e);
+        }
     }
 
     @Override
     public List<Horse> getAllHorse() {
         LOGGER.trace("getAllHorse");
-        return horseDao.getAllHorse();
+
+        try {
+            return horseDao.getAllHorse();
+        } catch (DataAccessException e) {
+            throw handleDataAccessException("Problem while reading horses", e);
+        }
     }
 
     @Override
@@ -45,8 +56,11 @@ public class SimpleHorseService implements HorseService{
         LOGGER.trace("getHorsesformOwner({}}", id);
 
         validator.validateId(id);
-
-        return horseDao.getHorsefromOwner(id);
+        try {
+            return horseDao.getHorsefromOwner(id);
+        } catch (DataAccessException e) {
+            throw handleDataAccessException(String.format("Problem while getting owner from horse with id %s", id), e);
+        }
     }
 
     @Override
@@ -55,7 +69,12 @@ public class SimpleHorseService implements HorseService{
 
         validator.validateNewHorse(horse);
 
-        return horseDao.save(horse);
+        try {
+            return horseDao.save(horse);
+        } catch (DataAccessException e) {
+            throw handleDataAccessException(String.format("Problem while saving horse with name %s", horse.getName()), e);
+        }
+
     }
 
     @Override
@@ -64,7 +83,11 @@ public class SimpleHorseService implements HorseService{
 
         validator.validateId(id);
 
-        horseDao.delete(id);
+        try {
+            horseDao.delete(id);
+        } catch (DataAccessException e) {
+            throw handleDataAccessException(String.format("Problem while deleting horse with id %s", id), e);
+        }
     }
 
     @Override
@@ -73,8 +96,11 @@ public class SimpleHorseService implements HorseService{
 
         validator.validateNewHorse(horse);
         validator.validateId(id);
-
-        return horseDao.update(id, horse);
+        try {
+            return horseDao.update(id, horse);
+        } catch (DataAccessException e) {
+            throw handleDataAccessException(String.format("Problem while updating horse with id %s", id), e);
+        }
     }
 
     @Override
@@ -82,7 +108,15 @@ public class SimpleHorseService implements HorseService{
         LOGGER.trace("searchHorse({})", param);
 
         validator.validateSearchHorse(param);
+        try {
+            return horseDao.searchHorse(param);
+        } catch (DataAccessException e) {
+            throw handleDataAccessException("Problem while searching horse with parameter", e);
+        }
+    }
 
-        return horseDao.searchHorse(param);
+    private RuntimeException handleDataAccessException(String errMsg, DataAccessException e) {
+        LOGGER.error(errMsg, e);
+        return new RuntimeException(errMsg, e);
     }
 }

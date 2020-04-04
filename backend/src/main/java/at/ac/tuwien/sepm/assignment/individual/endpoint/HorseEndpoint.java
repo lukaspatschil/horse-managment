@@ -33,6 +33,7 @@ public class HorseEndpoint {
     }
 
     @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public HorseDto getOneById(@PathVariable("id") Long id) {
         LOGGER.info("GET " + BASE_URL + "/{}", id);
         try {
@@ -45,6 +46,7 @@ public class HorseEndpoint {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<HorseDto> getAllHorse() {
         LOGGER.info("GET " + BASE_URL + " all horses");
 
@@ -52,6 +54,7 @@ public class HorseEndpoint {
     }
 
     @GetMapping("/owners/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public List<HorseDto> getHorseformOwner(@PathVariable("id") Long id) {
         LOGGER.info("GET horses from owner" +  BASE_URL + "/{}", id);
         try {
@@ -64,6 +67,7 @@ public class HorseEndpoint {
     }
 
     @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
     public List<HorseDto> searchHorse(HorseSearch params) {
         LOGGER.info("GET (search) " + BASE_URL + "/{}", params.getName());
         try {
@@ -85,6 +89,7 @@ public class HorseEndpoint {
     }
 
     @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
         LOGGER.info("DELETE " + BASE_URL + "/{}", id);
         try {
@@ -97,6 +102,7 @@ public class HorseEndpoint {
     }
 
     @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public HorseDto updateOne(@RequestBody HorseDto newHorse, @PathVariable Long id) {
         LOGGER.info("PUT " + BASE_URL + "/{}", id);
         try {

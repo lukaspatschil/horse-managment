@@ -38,7 +38,10 @@ public class HorseJdbcDao implements HorseDao {
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Horse> horses = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
 
-        if (horses.isEmpty()) throw new NotFoundException("Could not find owner with id " + id);
+        if (horses.isEmpty()) {
+            LOGGER.error("Horse not found.");
+            throw new NotFoundException("Could not find owner with id " + id);
+        }
 
         return horses.get(0);
     }
@@ -163,8 +166,10 @@ public class HorseJdbcDao implements HorseDao {
 
         List<Horse> horses = jdbcTemplate.query(sql, new Object[] { param.getName(), param.getNotes(), param.getRace(), (param.getRating() != null) ? param.getRating() : "%" , (param.getBirthday() != null) ? param.getBirthday() : "1900-01-01"  }, this::mapRow);
 
-        if (horses.isEmpty())
+        if (horses.isEmpty()) {
+            LOGGER.error("Horse not found.");
             throw new NotFoundException("Could not find horse with given params");
+        }
 
         return horses;
     }

@@ -37,8 +37,10 @@ public class OwnerJdbcDao implements OwnerDao {
         final String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
         List<Owner> owners = jdbcTemplate.query(sql, new Object[] { id }, this::mapRow);
 
-        if (owners.isEmpty())
+        if (owners.isEmpty()) {
+            LOGGER.error("Owner not found.");
             throw new NotFoundException("Could not find owner with id %s" + id);
+        }
 
         return owners.get(0);
     }
@@ -127,8 +129,10 @@ public class OwnerJdbcDao implements OwnerDao {
             return stmt;
         }, this::mapRow);
 
-        if (owners.isEmpty())
+        if (owners.isEmpty()) {
+            LOGGER.error("Owner not found.");
             throw new NotFoundException("Could not find owner with parmeters.");
+        }
 
         return owners;
     }
