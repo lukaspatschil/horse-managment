@@ -41,7 +41,7 @@ public class Validator {
             LOGGER.error("The horse name can not be empty.");
             throw new ValidationException("The name can not be empty.");
         }
-        if (horse.getBirthday() == null || horse.getBirthday().isBefore(LocalDate.of(1980, 1, 1))) {
+        if (horse.getBirthday() == null || horse.getBirthday().isBefore(LocalDate.of(1980, 1, 1)) ||  horse.getBirthday().isAfter(LocalDate.now())) {
             LOGGER.error("The horse can not be this old and alive, don't lie.");
             throw new ValidationException("The horse can not be this old and alive, don't lie.");
         }

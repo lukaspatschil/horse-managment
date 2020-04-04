@@ -113,6 +113,9 @@ public class SimpleHorseService implements HorseService{
         validator.validateSearchHorse(param);
         try {
             return horseDao.searchHorse(param);
+        } catch (ValidationException e) {
+            LOGGER.error(e.getMessage());
+            throw new ValidationException("Could not delete because it still has horses");
         } catch (PersistenceException e) {
             throw handleDataAccessException(e.getMessage(), e);
         }

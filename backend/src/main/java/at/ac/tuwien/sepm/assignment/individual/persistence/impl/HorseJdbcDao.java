@@ -7,10 +7,13 @@ import at.ac.tuwien.sepm.assignment.individual.persistence.HorseDao;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
 import java.util.List;
+
+import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -136,7 +139,7 @@ public class HorseJdbcDao implements HorseDao {
     }
 
     @Override
-    public void delete(Long id) throws PersistenceException {
+    public void delete(Long id) throws PersistenceException, ValidationException {
         LOGGER.trace("Delete horse with id {}", id);
         final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
 
@@ -145,6 +148,9 @@ public class HorseJdbcDao implements HorseDao {
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 stmt.setLong(1, id);
                 return stmt; });
+        } catch (DataIntegrityViolationException e) {
+            LOGGER.error("Could not delete horse (DataIntegrityViolationException)");
+            throw new ValidationException("Could not delete horse (DataIntegrityViolationException)");
         } catch (DataAccessException e) {
             LOGGER.error("Could not delete horse (PersistenceException)");
             throw new PersistenceException("Could not delete horse with id" + id, e);
