@@ -34,18 +34,10 @@ export class HorseService {
     return this.httpClient.get<Horse[]>(this.messageBaseUri + "/owners/" + id);
   }
 
-  /**
-   *
-   * @param horse
-   */
   addHorse(horse: Horse): Observable<Horse> {
     return this.httpClient.post<Horse>(this.messageBaseUri, horse, httpOptions);
   }
 
-  /**
-   *
-   * @param horse
-   */
   deleteHorse(horse: Horse): Observable<Horse> {
     return this.httpClient.delete<Horse>(this.messageBaseUri + "/" + horse.id);
   }
