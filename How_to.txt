@@ -1,0 +1,14 @@
+Under navbar owner:
+Add owner:
+    Add an owner by filling out the name box and press 'Add'
+Search owner:
+    Serach owners by filling out the search box and press 'Search'
+View/Update owner:
+    Click on the owner card and view all details.
+    If you changed something and want to save it press 'Update'
+
+Under navbar horse:
+Add, Search, and Viwe/Update horse works the same as with owner
+
+Under navbar list all:
+List all gives a list of all owners and thier horses
