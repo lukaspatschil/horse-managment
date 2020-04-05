@@ -3,6 +3,7 @@ package at.ac.tuwien.sepm.assignment.individual.endpoint.mapper;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseDto;
 import at.ac.tuwien.sepm.assignment.individual.endpoint.dto.HorseSearch;
 import at.ac.tuwien.sepm.assignment.individual.entity.Horse;
+import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,7 +26,11 @@ public class HorseMapper {
     }
 
     public Horse dtoToEntity(HorseDto horse) {
-        return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), Base64.getDecoder().decode(horse.getImage()), horse.getType(), horse.getCreatedAt(),  horse.getUpdatedAt());
+        try {
+            return new Horse(horse.getId(), horse.getName(), horse.getNotes(), horse.getRating(), horse.getBirthday(), horse.getRace(), horse.getOwner(), Base64.getDecoder().decode(horse.getImage()), horse.getType(), horse.getCreatedAt(), horse.getUpdatedAt());
+        } catch (IllegalArgumentException e) {
+            throw new ValidationException("The image is not a Base64");
+        }
     }
 
     public Horse paramstoEntity(HorseSearch horse) {
