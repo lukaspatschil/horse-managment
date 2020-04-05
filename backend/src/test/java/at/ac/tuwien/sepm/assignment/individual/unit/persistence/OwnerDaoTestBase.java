@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import at.ac.tuwien.sepm.assignment.individual.entity.Owner;
 import at.ac.tuwien.sepm.assignment.individual.exception.NotFoundException;
-import at.ac.tuwien.sepm.assignment.individual.exception.PersistenceException;
 import at.ac.tuwien.sepm.assignment.individual.persistence.OwnerDao;
+import at.ac.tuwien.sepm.assignment.individual.util.ValidationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,9 @@ public abstract class OwnerDaoTestBase {
     }
 
     @Test
-    @DisplayName("Delete owner with horses should throw PersistenceException")
-    public void creatingOwner_withEmpty_shouldThrowValidationException() {
-        assertThrows(PersistenceException.class,
-            () -> ownerDao.delete(2L));
+    @DisplayName("Search for all existing owner with empty name")
+    public void searchOwner_withEmptyName_shouldWork() {
+        assert (!ownerDao.searchOwner(new Owner("")).isEmpty());
     }
 
     @Test
