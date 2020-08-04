@@ -1,6 +1,14 @@
-<div>
-    <form class="form" (ngSubmit)="onSubmit()">
-        <input type="text" name="name" [(ngModel)]="name" placeholder="Search Owner...">
-        <input type="submit" value="Search" class="btn btn-primary">
-    </form>
+<div class="pt-3 pb-3">
+  <form (ngSubmit)="onSubmit()">
+    <div class="d-flex">
+      <input
+        type="text"
+        name="name"
+        class="form-control"
+        [(ngModel)]="name"
+        placeholder="Search Owner..."
+      />
+      <input type="submit" value="Search" class="btn btn-primary pl-4 pr-4" />
+    </div>
+  </form>
 </div>

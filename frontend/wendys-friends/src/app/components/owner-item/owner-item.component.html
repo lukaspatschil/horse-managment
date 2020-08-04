@@ -1,21 +1,54 @@
 <div>
-    <button class="owner" (click)="onShow()">
+  <button class="owner" (click)="onShow()">
     <label class="marigingo" for="{{ owner.id }}">
-      <p class="marigingo widthlimiter">Horse Owner: <span class="font-weight-bold">{{owner.name}}</span></p>
+      <p class="marigingo widthlimiter">
+        Horse Owner: <span class="font-weight-bold">{{ owner.name }}</span>
+      </p>
     </label>
-    <button (click)="onDelete(owner)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
+    <button
+      (click)="onDelete(owner)"
+      type="button"
+      class="btn btn-danger btn-circle"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&#10005;</span>
     </button>
-    </button>
+  </button>
 
-    <div *ngIf="show">
-        <form class="form" (ngSubmit)="onUpdate()">
-            <ul>
-                <li class="li"><span class="span">Name: </span><input type="text" name="name" [(ngModel)]="owner.name"></li>
-                <li class="li"><span class="span">Created: </span><input type="text" name="createdAt" [(ngModel)]="owner.createdAt"></li>
-                <li class="li"><span class="span">Updated: </span><input type="text" name="updatedAt" [(ngModel)]="owner.updatedAt"></li>
-                <li class="li"><input type="submit" value="Update" class="btn btn-primary"></li>
-            </ul>
-        </form>
-    </div>
+  <div *ngIf="show">
+    <form class="form" (ngSubmit)="onUpdate()">
+      <ul>
+        <li class="li">
+          <span class="span">Name: </span
+          ><input
+            type="text"
+            class="form-control"
+            name="name"
+            [(ngModel)]="owner.name"
+          />
+        </li>
+        <li class="li">
+          <span class="span">Created: </span
+          ><input
+            type="text"
+            class="form-control"
+            name="createdAt"
+            [(ngModel)]="owner.createdAt"
+          />
+        </li>
+        <li class="li">
+          <span class="span">Updated: </span
+          ><input
+            type="text"
+            class="form-control"
+            name="updatedAt"
+            [(ngModel)]="owner.updatedAt"
+          />
+        </li>
+        <li class="li">
+          <input type="submit" value="Update" class="btn btn-primary" />
+        </li>
+      </ul>
+    </form>
+  </div>
 </div>

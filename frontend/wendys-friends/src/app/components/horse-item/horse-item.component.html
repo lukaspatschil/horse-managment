@@ -1,51 +1,120 @@
 <div>
-    <button class="horse" (click)="onShow()">
-        <label for="{{ horse.id }}">
-        <p>Horse: <span class="font-weight-bold">{{horse.name}}</span></p>
-        </label>
-        <button (click)="onDelete(horse)" type="button" class="btn btn-danger btn-circle" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+  <button class="horse" (click)="onShow()">
+    <label for="{{ horse.id }}">
+      <p>
+        Horse: <span class="font-weight-bold">{{ horse.name }}</span>
+      </p>
+    </label>
+    <button
+      (click)="onDelete(horse)"
+      type="button"
+      class="btn btn-danger btn-circle"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&#10005;</span>
     </button>
+  </button>
 
-    <div *ngIf="show">
-        <form class="form" (ngSubmit)="onUpdate()">
-            <div class="wrapper">
-                <img class="image" src="{{horse.type + horse.image}}">
-                <ul class="ul">
-                    <li class="li"><span class="span">Name: </span><input type="text" class="input" name="name" [(ngModel)]="horse.name"></li>
-                    <li class="li"><span class="span">Notes: </span><input type="text" class="input" name="notes" [(ngModel)]="horse.notes"></li>
-                    <li class="li"><span class="span">Rating: </span>
-                        <select name="rating" class="input" [(ngModel)]="horse.rating">
-                            <option name="rating" value="1" selected>Rating of 1</option>
-                            <option name="rating" value="2">Rating of 2</option>
-                            <option name="rating" value="3">Rating of 3</option>
-                            <option name="rating" value="4">Rating of 4</option>
-                            <option name="rating" value="5">Rating of 5</option>
-                        </select>
-                    </li>
-                    <li class="li"><span class="span">Birthday: </span><input type="date" class="input" name="birthday" [(ngModel)]="horse.birthday"></li>
-                    <li class="li"><span class="span">Owner: </span>
-                        <select name="owner" class="input" [(ngModel)]="horse.owner">
-                            <option name="owner" *ngFor="let owner of owners" value="{{ owner.id }}">{{owner.name}}</option>
-                        </select>
-                    </li>
-                    <li class="li"><span class="span">Race: </span>
-                        <select name="race" class="input" [(ngModel)]="horse.race">
-                            <option name="race" value="ARABIAN">Arabian</option>
-                            <option name="race" value="MORGAN">Morgan</option>
-                            <option name="race" value="PAINT">Paint</option>
-                            <option name="race" value="APPALOOSA">Appaloosa</option>
-                        </select>
-                    </li>
-                    <li class="li"><span class="span">Created: </span><input type="text" class="input" name="createdAt" [(ngModel)]="horse.createdAt"></li>
-                    <li class="li"><span class="span">Updated: </span><input type="text" class="input" name="updatedAt" [(ngModel)]="horse.updatedAt"></li>
-                    <li class="li"><span class="span">Image: </span>
-                        <input type="file" name="fileList" class="input" [(ngModel)]="fileList" (change)="picked($event)" accept=".png,.jpg,.jpeg ">
-                    </li>
-                    <li class="li"><input type="submit" value="Update" class="btn btn-primary"></li>
-                </ul>
-            </div>
-        </form>
-    </div>
+  <div *ngIf="show">
+    <form class="form" (ngSubmit)="onUpdate()">
+      <div class="wrapper">
+        <img class="image" src="{{ horse.type + horse.image }}" />
+        <ul class="ul">
+          <li class="li">
+            <span class="span">Name: </span
+            ><input
+              type="text"
+              class="form-control"
+              name="name"
+              [(ngModel)]="horse.name"
+            />
+          </li>
+          <li class="li">
+            <span class="span">Notes: </span
+            ><input
+              type="text"
+              class="form-control"
+              name="notes"
+              [(ngModel)]="horse.notes"
+            />
+          </li>
+          <li class="li">
+            <span class="span">Rating: </span>
+            <select
+              name="rating"
+              class="form-control"
+              [(ngModel)]="horse.rating"
+            >
+              <option name="rating" value="1" selected>Rating of 1</option>
+              <option name="rating" value="2">Rating of 2</option>
+              <option name="rating" value="3">Rating of 3</option>
+              <option name="rating" value="4">Rating of 4</option>
+              <option name="rating" value="5">Rating of 5</option>
+            </select>
+          </li>
+          <li class="li">
+            <span class="span">Birthday: </span
+            ><input
+              type="date"
+              class="form-control"
+              name="birthday"
+              [(ngModel)]="horse.birthday"
+            />
+          </li>
+          <li class="li">
+            <span class="span">Owner: </span>
+            <select name="owner" class="form-control" [(ngModel)]="horse.owner">
+              <option
+                name="owner"
+                *ngFor="let owner of owners"
+                value="{{ owner.id }}"
+                >{{ owner.name }}</option
+              >
+            </select>
+          </li>
+          <li class="li">
+            <span class="span">Race: </span>
+            <select name="race" class="form-control" [(ngModel)]="horse.race">
+              <option name="race" value="ARABIAN">Arabian</option>
+              <option name="race" value="MORGAN">Morgan</option>
+              <option name="race" value="PAINT">Paint</option>
+              <option name="race" value="APPALOOSA">Appaloosa</option>
+            </select>
+          </li>
+          <li class="li">
+            <span class="span">Created: </span
+            ><input
+              type="text"
+              class="form-control"
+              name="createdAt"
+              [(ngModel)]="horse.createdAt"
+            />
+          </li>
+          <li class="li">
+            <span class="span">Updated: </span
+            ><input
+              type="text"
+              class="form-control"
+              name="updatedAt"
+              [(ngModel)]="horse.updatedAt"
+            />
+          </li>
+          <li class="li">
+            <span class="span">Image: </span>
+            <input
+              type="file"
+              name="fileList"
+              class="form-control"
+              [(ngModel)]="fileList"
+              (change)="picked($event)"
+              accept=".png,.jpg,.jpeg "
+            />
+          </li>
+          <li class="li">
+            <input type="submit" value="Update" class="btn btn-primary" />
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
 </div>

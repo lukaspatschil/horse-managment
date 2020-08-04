@@ -1,32 +1,68 @@
 <form class="form" (ngSubmit)="onSubmit()">
-    <div>
-        <h1 class="h3">Search for Horses:</h1>
-    </div>
-    <div>
-        <ul class="ul">
-            <li class="li"><span class="span">Name: </span><input type="text" class="input" name="name" [(ngModel)]="name" placeholder="Add name..."></li>
-            <li class="li"><span class="span">Notes: </span><input type="text" class="input" name="notes" [(ngModel)]="notes" placeholder="Add notes..." value=""></li>
-            <li class="li"><span class="span">Rating: </span>
-                <select name="rating" class="input" [(ngModel)]="rating">
-                    <option name="rating" value="0" selected disabled>Select the rating</option>
-                    <option name="rating" value="1">Rating of 1</option>
-                    <option name="rating" value="2">Rating of 2</option>
-                    <option name="rating" value="3">Rating of 3</option>
-                    <option name="rating" value="4">Rating of 4</option>
-                    <option name="rating" value="5">Rating of 5</option>
-                </select>
-            </li>
-            <li class="li"><span class="span">Birthday: </span><input type="date" class="input" name="birthday" [(ngModel)]="birthday" placeholder="Add birthday..."></li>
-            <li class="li"><span class="span">Race: </span>
-                <select name="race" class="input" [(ngModel)]="race">
-                    <option name="race" value=undefined selected disabled>Select the race</option>
-                    <option name="race" value="ARABIAN">Arabian</option>
-                    <option name="race" value="MORGAN">Morgan</option>
-                    <option name="race" value="PAINT">Paint</option>
-                    <option name="race" value="APPALOOSA">Appaloosa</option>
-                </select>
-            </li>
-            <li class="li"><input type="submit" value="Search" class="btn btn-primary"></li>
-        </ul>
-    </div>
+  <div>
+    <h1 class="h3">Search for Horses:</h1>
+  </div>
+  <div>
+    <ul class="ul">
+      <li class="li">
+        <span class="span">Name: </span
+        ><input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Add name..."
+        />
+      </li>
+      <li class="li">
+        <span class="span">Notes: </span
+        ><input
+          type="text"
+          class="form-control"
+          name="notes"
+          [(ngModel)]="notes"
+          placeholder="Add notes..."
+          value=""
+        />
+      </li>
+      <li class="li">
+        <span class="span">Rating: </span>
+        <select name="rating" class="form-control" [(ngModel)]="rating">
+          <option name="rating" value="0" selected disabled
+            >Select the rating</option
+          >
+          <option name="rating" value="1">Rating of 1</option>
+          <option name="rating" value="2">Rating of 2</option>
+          <option name="rating" value="3">Rating of 3</option>
+          <option name="rating" value="4">Rating of 4</option>
+          <option name="rating" value="5">Rating of 5</option>
+        </select>
+      </li>
+      <li class="li">
+        <span class="span">Birthday: </span
+        ><input
+          type="date"
+          class="form-control"
+          name="birthday"
+          [(ngModel)]="birthday"
+          placeholder="Add birthday..."
+        />
+      </li>
+      <li class="li">
+        <span class="span">Race: </span>
+        <select name="race" class="form-control" [(ngModel)]="race">
+          <option name="race" value="undefined" selected disabled
+            >Select the race</option
+          >
+          <option name="race" value="ARABIAN">Arabian</option>
+          <option name="race" value="MORGAN">Morgan</option>
+          <option name="race" value="PAINT">Paint</option>
+          <option name="race" value="APPALOOSA">Appaloosa</option>
+        </select>
+      </li>
+      <li class="li">
+        <input type="submit" value="Search" class="btn btn-primary" />
+      </li>
+    </ul>
+  </div>
 </form>
