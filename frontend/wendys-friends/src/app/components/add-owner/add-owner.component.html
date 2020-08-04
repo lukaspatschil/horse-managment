@@ -1,4 +1,12 @@
-<form class="form" (ngSubmit)="onSubmit()">
-    <input type="text" name="name" [(ngModel)]="name" placeholder="Add Owner...">
-    <input type="submit" value="Add" class="btn btn-primary">
+<form class="pt-3" (ngSubmit)="onSubmit()">
+  <div class="d-flex">
+    <input
+      type="text"
+      name="name"
+      class="form-control"
+      [(ngModel)]="name"
+      placeholder="Add Owner..."
+    />
+    <input type="submit" value="Add" class="btn btn-primary pl-4 pr-4" />
+  </div>
 </form>
